@@ -14,6 +14,9 @@ type TProduct = {
   rating: number;
   image: string;
 }
+interface CategoryCardProps {
+  name: string;
+  }
 
 const ProductContainer = () => {
   const [category, setCategory] = useState('');
@@ -23,9 +26,18 @@ const ProductContainer = () => {
 
   return (
     <div>
-      <div className="flex justify-between mb-5">
-        <AddProductModal />
+      <div>
+      {/* <CategoryContainer categories={categories?.data || []}>  </CategoryContainer> */}
+      <div className='bg-white border border-lime-300 rounded-b-md px-5 flex justify-between py-5'> {categories?.data?.map((category: CategoryCardProps, index) => (
+        <div key={index}>  <div className="p-4">
+        <p className="mt-2 text-lime-900">Category: {category.name}</p>
+      </div> </div>
+      ))}</div>
+      </div>
+      <div className="flex flex-col justify-between mb-5">
+        
         <CategoryFilter category={category} setCategory={setCategory} categories={categories?.data || []} />
+        <AddProductModal />
       </div>
       <div className="bg-primary-gradient w-full h-full rounded-xl p-[5px]">
         <div className="py-5 w-full h-full rounded-lg space-y-3">

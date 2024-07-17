@@ -11,7 +11,7 @@ const CategoryFilter: FC<CategoryFilterProps> = ({ category, setCategory, catego
     <select
       value={category}
       onChange={(e) => setCategory(e.target.value)}
-      className="form-select mt-1 block w-full"
+      className="form-select mt-1 block w-full py-3 border rounded-md"
     >
       <option value="">All Categories</option>
       {categories.map((cat) => (

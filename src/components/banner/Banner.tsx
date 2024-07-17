@@ -11,10 +11,10 @@ const Banner = () => {
     return (
         <>
             <div
-                className="relative rounded-md w-full h-screen bg-cover bg-center flex items-center justify-center opacity-75"
+                className="relative rounded-t-md w-full h-screen bg-cover bg-center flex items-center justify-center opacity-75"
                 style={{ backgroundImage: `url(${bannerImg})` }}
             >
-                <div className="text-center text-green-900">
+                <div className="text-center text-lime-950">
                     <h3 className="text-xl md:text-3xl mb-2">
                         Welcome to
                     </h3>
