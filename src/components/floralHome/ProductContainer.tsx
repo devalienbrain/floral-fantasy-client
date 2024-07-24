@@ -28,7 +28,7 @@ const ProductContainer = () => {
     <div>
       <div>
       {/* <CategoryContainer categories={categories?.data || []}>  </CategoryContainer> */}
-      <div className='bg-white border border-lime-300 rounded-b-md px-5 flex justify-between py-5'> {categories?.data?.map((category: CategoryCardProps, index) => (
+      <div className='bg-white border border-lime-300 px-5 flex justify-between pb-5 rounded-xl -mt-10 z-10'> {categories?.data?.map((category: CategoryCardProps, index) => (
         <div key={index}>  <div className="p-4">
         <p className="mt-2 text-lime-900">Category: {category.name}</p>
       </div> </div>
@@ -42,9 +42,9 @@ const ProductContainer = () => {
       <div className="bg-primary-gradient w-full h-full rounded-xl p-[5px]">
         <div className="py-5 w-full h-full rounded-lg space-y-3">
           {isProductsLoading ? (
-            <p>Loading...</p>
+            <p className='text-green-500'>Loading...</p>
           ) : isProductsError ? (
-            <p>Error loading products</p>
+            <p className='text-red-500'>Oops! Error loading products</p>
           ) : (
             products?.data?.map((product: TProduct) => <ProductCard key={product._id} {...product} />)
           )}
