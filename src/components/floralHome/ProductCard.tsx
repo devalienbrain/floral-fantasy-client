@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { Link } from "react-router-dom";
 
 interface ProductCardProps {
   _id: string;
@@ -12,6 +13,7 @@ interface ProductCardProps {
 }
 
 const ProductCard: FC<ProductCardProps> = ({
+  _id,
   title,
   price,
   category,
@@ -21,27 +23,34 @@ const ProductCard: FC<ProductCardProps> = ({
   image,
 }) => {
   return (
-    <div className="p-4 border rounded-lg shadow-md">
-      <img
-        src={image}
-        alt={title}
-        className="w-full h-48 object-cover rounded-lg mb-4"
-      />
-      <h2 className="text-xl font-semibold">{title}</h2>
-      <p className="text-gray-700">{description}</p>
-      <p className="mt-2 text-gray-900">${price.toFixed(2)}</p>
-      <p className="mt-2 text-gray-600">Category: {category}</p>
-      <p className="mt-2 text-gray-600">In Stock: {quantity}</p>
-      <p className="mt-2 text-yellow-500">Rating: {rating}</p>
-      <div className="flex gap-2">
-        <button className="px-6 py-3 mt-4 bg-lime-600 hover:bg-lime-500 text-white rounded-md transition duration-300">
-          Add to Cart
-        </button>
-        <button className="px-6 py-3 mt-4 bg-white border border-lime-600 hover:text-lime-500 text-black rounded-md transition duration-300">
-          Product Details
-        </button>
-      </div>
-    </div>
+    <tr>
+      <td>
+        <div className="mask mask-squircle h-24 w-24">
+          <img src={image} alt="Image" />
+        </div>
+      </td>
+      <td>
+        <div className="font-bold">{title}</div>
+        <div>
+          <Link to={`/products/${_id}`} className="text-blue-500 hover:underline">
+            {_id}
+          </Link>
+        </div>
+      </td>
+      <td>{price} $</td>
+      <td>{category}</td>
+      <td>
+        <div className="flex flex-col gap-2">
+          <button className="px-6 py-3 mt-4 bg-lime-500 hover:bg-lime-600 text-white rounded-md transition duration-300">
+            Update
+          </button>
+
+          <button className="px-6 py-3 mt-4 bg-red-600 border hover:bg-red-500 text-white rounded-md transition duration-300">
+            Delete
+          </button>
+        </div>
+      </td>
+    </tr>
   );
 };
 

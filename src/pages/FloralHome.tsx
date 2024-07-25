@@ -7,7 +7,7 @@ import Container from "@/components/ui/Container";
 const FloralHome = () => {
   return (
     <>
-      <div className="bg-black text-white">
+      <div className="bg-cyan-600 text-white">
         <div>
           <Navbar />
           <Banner />
