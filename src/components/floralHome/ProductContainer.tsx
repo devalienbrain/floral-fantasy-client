@@ -1,7 +1,7 @@
 import { useState } from "react";
-import AddProductModal from "./AddProductModal";
-import CategoryFilter from "./CategoryFilter";
 import ProductCard from "./ProductCard";
+import { MdOutlineNavigateNext } from "react-icons/md";
+import { MdOutlineNavigateBefore } from "react-icons/md";
 import {
   useGetCategoriesQuery,
   useGetProductsQuery,
@@ -175,7 +175,75 @@ const ProductContainer = () => {
                 placeholder="Product title"
                 className="input input-bordered w-full"
               />
-              {/* More form inputs */}
+              <label>Price</label>
+              <input
+                type="number"
+                value={newProduct.price}
+                onChange={(e) =>
+                  setNewProduct({
+                    ...newProduct,
+                    price: parseFloat(e.target.value),
+                  })
+                }
+                placeholder="Product price"
+                className="input input-bordered w-full mt-4"
+              />
+              <label>Category</label>
+              <input
+                type="text"
+                value={newProduct.category}
+                onChange={(e) =>
+                  setNewProduct({ ...newProduct, category: e.target.value })
+                }
+                placeholder="Product category"
+                className="input input-bordered w-full mt-4"
+              />
+              <label>Quantity</label>
+              <input
+                type="number"
+                value={newProduct.quantity}
+                onChange={(e) =>
+                  setNewProduct({
+                    ...newProduct,
+                    quantity: parseInt(e.target.value),
+                  })
+                }
+                placeholder="Product quantity"
+                className="input input-bordered w-full mt-4"
+              />
+              <label>Description of the product</label>
+              <input
+                type="text"
+                value={newProduct.description}
+                onChange={(e) =>
+                  setNewProduct({ ...newProduct, description: e.target.value })
+                }
+                placeholder="Product description"
+                className="input input-bordered w-full mt-4"
+              />
+              <label>Rating</label>
+              <input
+                type="number"
+                value={newProduct.rating}
+                onChange={(e) =>
+                  setNewProduct({
+                    ...newProduct,
+                    rating: parseFloat(e.target.value),
+                  })
+                }
+                placeholder="Product rating"
+                className="input input-bordered w-full mt-4"
+              />
+              <label>ImageURL</label>
+              <input
+                type="text"
+                value={newProduct.image}
+                onChange={(e) =>
+                  setNewProduct({ ...newProduct, image: e.target.value })
+                }
+                placeholder="Product image URL"
+                className="input input-bordered w-full mt-4"
+              />
             </div>
             <div className="modal-action">
               <button
@@ -201,7 +269,7 @@ const ProductContainer = () => {
         <table className="table">
           {/* head */}
           <thead>
-            <tr className="font-semibold text-black">
+            <tr className="font-bold  text-base text-lime-900">
               <th className="text-left">Image</th>
               <th className="text-left">Title</th>
               <th className="text-left">Price</th>
@@ -222,23 +290,23 @@ const ProductContainer = () => {
           </tbody>
         </table>
         {/* Pagination */}
-        <div className="mt-4 flex justify-center">
+        <div className="my-4 flex justify-between items-center">
           <button
-            className="btn"
+            className="w-10 h-10 rounded-full"
             onClick={() => handlePageChange(page - 1)}
             disabled={page <= 1}
           >
-            Previous
+            <MdOutlineNavigateBefore className="text-2xl font-black" />
           </button>
           <span className="mx-4">
             Page {productsData?.pagination?.currentPage} of {productsData?.pagination?.totalPages}
           </span>
           <button
-            className="btn"
+            className="w-10 h-10 rounded-full"
             onClick={() => handlePageChange(page + 1)}
             disabled={page >= productsData?.pagination?.totalPages}
           >
-            Next
+            <MdOutlineNavigateNext className="text-2xl font-black" />
           </button>
         </div>
       </div>

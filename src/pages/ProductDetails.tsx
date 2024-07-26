@@ -19,7 +19,7 @@ const ProductDetails: FC<ProductDetailsProps> = () => {
     product.data;
 
   return (
-    <div className="p-4 border rounded-lg shadow-md">
+    <div className="p-10 border rounded-lg shadow-md">
       <img
         src={image}
         alt={title}

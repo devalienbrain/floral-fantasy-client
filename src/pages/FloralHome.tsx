@@ -1,26 +1,20 @@
 import Banner from "@/components/banner/Banner";
 import ProductContainer from "@/components/floralHome/ProductContainer";
-import Footer from "@/components/footer/Footer";
-import Navbar from "@/components/navbar/Navbar";
-import Container from "@/components/ui/Container";
+import Shine from "@/components/shine/Shine";
 
 const FloralHome = () => {
   return (
     <>
       <div className="bg-black/80 text-white">
-        <div>
-          <Navbar />
-          <Banner />
-        </div>
-        <Container>
-          {/* <h1 className="text-center text-4xl font-bold py-5">Floral Fantasy: Online Flower Shop</h1> */}
-
-          <ProductContainer />
-        </Container>
-        <div>
-          <Footer />
-        </div>
+        <Banner />
       </div>
+      <div className="h-full w-full max-w-7xl mx-auto px-10 pt-5 bg-white text-black">
+        <ProductContainer />
+      </div>
+      <div className="bg-black text-white">
+        <Shine />
+      </div>
+      
     </>
   );
 };

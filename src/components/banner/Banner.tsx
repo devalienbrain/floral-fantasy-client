@@ -15,18 +15,18 @@ const Banner = () => {
                 style={{ backgroundImage: `url(${bannerImg})` }}
             >
                 <div className="text-center bg-gradient-to-r from-cyan-800 via-red-600 to-lime-700 bg-clip-text text-transparent">
-                    <h3 className="text-xl font-semibold md:text-2xl mb-2">
+                    <h3 className="text-2xl font-semibold md:text-3xl mb-2">
                         Welcome to
                     </h3>
-                    <h1 className="text-2xl md:text-3xl font-black mb-4">
+                    <h1 className="text-3xl md:text-5xl font-black mb-4">
                         ONE OF THE LEADING ONLINE FLOWER SHOP
                     </h1>
-                    <h2 className="text-2xl font-bold md:text-3xl mb-4">
+                    <h2 className="text-2xl font-black md:text-4xl mb-4">
                         Floral Fantasy
                     </h2>
                     <button
                         onClick={scrollToNextSection}
-                        className="px-6 py-3 mt-4 bg-lime-600 hover:bg-lime-500 text-white rounded-md transition duration-300"
+                        className="px-6 py-3 mt-4 bg-lime-600 hover:bg-lime-500 text-white rounded-md transition duration-300 shadow-xl"
                     >
                         Shop Now
                     </button>

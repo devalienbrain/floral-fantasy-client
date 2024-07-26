@@ -1,15 +1,22 @@
-import App from "@/App";
-import ProductDetails from "@/pages/ProductDetails";
 import { createBrowserRouter } from "react-router-dom";
+import Layout from "@/layout/Layout";
+import FloralHome from "@/pages/FloralHome";
+import ProductDetails from "@/pages/ProductDetails";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
-  },
-  {
-    path: "/products/:id",
-    element: <ProductDetails />,
+    element: <Layout />,
+    children: [
+      {
+        path: "/",
+        element: <FloralHome />,
+      },
+      {
+        path: "/products/:id",
+        element: <ProductDetails />,
+      },
+    ],
   },
 ]);
 export default router;

@@ -44,11 +44,11 @@ const ProductCard: FC<ProductCardProps> = ({
       <td className="font-bold">{category}</td>
       <td>
         <div className="flex flex-col">
-          <button className="px-6 py-3 mt-4 bg-lime-500 hover:bg-lime-600 text-white rounded-md transition duration-300">
+          <button className="px-6 py-3 mt-4 border border-lime-500 hover:bg-lime-500 hover:text-white rounded-md transition duration-300">
             Update
           </button>
 
-          <button className="px-6 py-3 mt-4 bg-red-600 border hover:bg-red-500 text-white rounded-md transition duration-300">
+          <button className="px-6 py-3 mt-4 border border-red-600 hover:bg-red-600 hover:text-white rounded-md transition duration-300">
             Delete
           </button>
         </div>
