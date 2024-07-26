@@ -6,7 +6,7 @@ export const baseApi = createApi({
   tagTypes: ['Product', 'Category'],
   endpoints: (builder) => ({
     getProducts: builder.query({
-      query: ({ category, search, page, limit, sortBy, sortOrder }) => {
+      query: ({ category, search, page=1, limit=10, sortBy, sortOrder }) => {
         const params = new URLSearchParams();
         if (category) params.append('category', category);
         if (search) params.append('search', search);

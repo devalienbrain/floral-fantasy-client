@@ -54,7 +54,7 @@ const ProductContainer = () => {
     isLoading: isProductsLoading,
     isError: isProductsError,
   } = useGetProductsQuery({ category, page, limit });
-
+  console.log(productsData);
   const handleAddCategory = async () => {
     try {
       await addCategory({ name: newCategoryName }).unwrap();
@@ -299,7 +299,8 @@ const ProductContainer = () => {
             <MdOutlineNavigateBefore className="text-2xl font-black" />
           </button>
           <span className="mx-4">
-            Page {productsData?.pagination?.currentPage} of {productsData?.pagination?.totalPages}
+            Page {productsData?.pagination?.currentPage} of{" "}
+            {productsData?.pagination?.totalPages}
           </span>
           <button
             className="w-10 h-10 rounded-full"
