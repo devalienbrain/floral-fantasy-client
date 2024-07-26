@@ -26,7 +26,7 @@ const Banner = () => {
                     </h2>
                     <button
                         onClick={scrollToNextSection}
-                        className="px-6 py-3 mt-4 bg-black hover:bg-lime-500 text-white rounded-md transition duration-300"
+                        className="px-6 py-3 mt-4 bg-lime-600 hover:bg-lime-500 text-white rounded-md transition duration-300"
                     >
                         Shop Now
                     </button>

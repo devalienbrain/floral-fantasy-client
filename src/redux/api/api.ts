@@ -1,4 +1,3 @@
-
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const baseApi = createApi({
@@ -6,7 +5,6 @@ export const baseApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000' }),
   tagTypes: ['Product', 'Category'],
   endpoints: (builder) => ({
-    // Products
     getProducts: builder.query({
       query: ({ category, search, page, limit, sortBy, sortOrder }) => {
         const params = new URLSearchParams();
@@ -20,16 +18,21 @@ export const baseApi = createApi({
       },
       providesTags: ['Product']
     }),
+    
     getProductById: builder.query({
       query: (id) => ({ url: `/products/${id}` }),
       providesTags: ['Product']
     }),
     addProduct: builder.mutation({
+      
       query: (data) => ({
+        
+        
         url: '/products',
         method: 'POST',
         body: data,
       }),
+      
       invalidatesTags: ['Product']
     }),
     updateProduct: builder.mutation({
@@ -90,3 +93,4 @@ export const {
   useUpdateCategoryMutation,
   useDeleteCategoryMutation,
 } = baseApi;
+

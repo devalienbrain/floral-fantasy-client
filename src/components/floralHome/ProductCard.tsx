@@ -32,15 +32,18 @@ const ProductCard: FC<ProductCardProps> = ({
       <td>
         <div className="font-bold">{title}</div>
         <div>
-          <Link to={`/products/${_id}`} className="text-blue-500 hover:underline">
+          <Link
+            to={`/products/${_id}`}
+            className="text-blue-500 hover:underline"
+          >
             {_id}
           </Link>
         </div>
       </td>
       <td>{price} $</td>
-      <td>{category}</td>
+      <td className="font-bold">{category}</td>
       <td>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col">
           <button className="px-6 py-3 mt-4 bg-lime-500 hover:bg-lime-600 text-white rounded-md transition duration-300">
             Update
           </button>
