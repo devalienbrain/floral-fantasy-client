@@ -63,7 +63,7 @@ const ProductContainer = () => {
     isLoading: isProductsLoading,
     isError: isProductsError,
   } = useGetProductsQuery({ category, page, limit });
-  console.log(productsData);
+  // console.log(productsData);
   const handleAddCategory = async () => {
     try {
       await addCategory({ name: newCategoryName }).unwrap();
@@ -94,12 +94,28 @@ const ProductContainer = () => {
     }
   };
 
+  // const handleUpdateProduct = async () => {
+  //   if (editingProduct) {
+  //     try {
+  //       await updateProduct({
+  //         id: editingProduct._id,
+  //         data: editingProduct,
+  //       }).unwrap();
+  //       setEditingProduct(null);
+  //       document.getElementById("edit_modal").close();
+  //     } catch (error) {
+  //       console.error("Failed to update product", error);
+  //     }
+  //   }
+  // };
+
   const handleUpdateProduct = async () => {
     if (editingProduct) {
       try {
+        const { _id, ...updateData } = editingProduct; // Exclude _id from update data
         await updateProduct({
-          id: editingProduct._id,
-          data: editingProduct,
+          id: _id,
+          data: updateData,
         }).unwrap();
         setEditingProduct(null);
         document.getElementById("edit_modal").close();
@@ -108,10 +124,12 @@ const ProductContainer = () => {
       }
     }
   };
+  
 
   const handleEditProduct = (id: string) => {
     const product = productsData.data.find((p: TProduct) => p._id === id);
     setEditingProduct(product);
+    console.log(product);
     document.getElementById("edit_modal").showModal();
   };
 
@@ -128,61 +146,128 @@ const ProductContainer = () => {
     setPage(newPage);
   };
 
-  // Edit/ update modal starts
-  <dialog id="edit_modal" className="modal modal-bottom sm:modal-middle">
-    <div className="modal-box">
-      <h3 className="font-bold text-lg">Edit product</h3>
-      {editingProduct && (
-        <div className="py-4">
-          <label>Title</label>
-          <input
-            type="text"
-            value={editingProduct.title}
-            onChange={(e) =>
-              setEditingProduct({ ...editingProduct, title: e.target.value })
-            }
-            placeholder="Product title"
-            className="input input-bordered w-full"
-          />
-          {/* Repeat for other fields */}
-          <label>Price</label>
-          <input
-            type="number"
-            value={editingProduct.price}
-            onChange={(e) =>
-              setEditingProduct({
-                ...editingProduct,
-                price: parseFloat(e.target.value),
-              })
-            }
-            placeholder="Product price"
-            className="input input-bordered w-full mt-4"
-          />
-          {/* Add other fields similarly */}
-        </div>
-      )}
-      <div className="modal-action">
-        <button
-          className="btn"
-          onClick={handleUpdateProduct}
-          disabled={isUpdatingProduct}
-        >
-          {isUpdatingProduct ? "Updating..." : "Update"}
-        </button>
-        <button
-          className="btn"
-          onClick={() => document.getElementById("edit_modal").close()}
-        >
-          Close
-        </button>
-      </div>
-    </div>
-  </dialog>;
-
-  // Edit/ update modal Ends
-
   return (
     <>
+      // Edit/ update modal starts
+      <dialog id="edit_modal" className="modal modal-bottom sm:modal-middle ">
+        <div className="modal-box bg-lime-600 text-white">
+          <h3 className="font-bold text-lg">Edit product</h3>
+          {editingProduct && (
+            <div className="py-4">
+              <label>Title</label>
+              <input
+                type="text"
+                value={editingProduct.title}
+                onChange={(e) =>
+                  setEditingProduct({
+                    ...editingProduct,
+                    title: e.target.value,
+                  })
+                }
+                placeholder="Product title"
+                className="input input-bordered w-full"
+              />
+              {/* Repeat for other fields */}
+              <label>Price</label>
+              <input
+                type="number"
+                value={editingProduct.price}
+                onChange={(e) =>
+                  setEditingProduct({
+                    ...editingProduct,
+                    price: parseFloat(e.target.value),
+                  })
+                }
+                placeholder="Product price"
+                className="input input-bordered w-full mt-4"
+              />
+              {/* Add other fields similarly */}
+              <label>Category</label>
+              <input
+                disabled
+                type="text"
+                value={editingProduct.category}
+                onChange={(e) =>
+                  setEditingProduct({
+                    ...editingProduct,
+                    category: e.target.value,
+                  })
+                }
+                placeholder="Product category"
+                className="input input-bordered w-full mt-4"
+              />
+              <label>Quantity</label>
+              <input
+                type="number"
+                value={editingProduct.quantity}
+                onChange={(e) =>
+                  setEditingProduct({
+                    ...editingProduct,
+                    quantity: parseFloat(e.target.value),
+                  })
+                }
+                placeholder="Product quantity"
+                className="input input-bordered w-full mt-4"
+              />
+              <label>Description of the Product</label>
+              <input
+                type="text"
+                value={editingProduct.description}
+                onChange={(e) =>
+                  setEditingProduct({
+                    ...editingProduct,
+                    description: e.target.value,
+                  })
+                }
+                placeholder="Product description"
+                className="input input-bordered w-full mt-4"
+              />
+              <label>Rating</label>
+              <input
+                type="number"
+                value={editingProduct.rating}
+                onChange={(e) =>
+                  setEditingProduct({
+                    ...editingProduct,
+                    rating: parseFloat(e.target.value),
+                  })
+                }
+                placeholder="Product rating"
+                className="input input-bordered w-full mt-4"
+              />
+              <label>ImageURL</label>
+              <input
+                type="text"
+                value={editingProduct.image}
+                onChange={(e) =>
+                  setEditingProduct({
+                    ...editingProduct,
+                    image: e.target.value,
+                  })
+                }
+                placeholder="Product image url"
+                className="input input-bordered w-full mt-4"
+              />
+            </div>
+          )}
+          <div className="modal-action">
+            <button
+              className="btn"
+              onClick={handleUpdateProduct}
+              disabled={isUpdatingProduct}
+            >
+              {isUpdatingProduct ? "Updating..." : "Update"}
+            </button>
+            <button
+              className="btn"
+              onClick={() => document.getElementById("edit_modal").close()}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </dialog>
+      ; // Edit/ update modal Ends
       {/* Category Container */}
       <div>
         <h1 className="text-center py-10 text-6xl font-bold">Categories</h1>
@@ -243,7 +328,6 @@ const ProductContainer = () => {
           ))}
         </div>
       </div>
-
       <h1 className="text-center py-10 text-6xl font-bold">Products</h1>
       <div className="mx-auto flex justify-center text-white pb-10">
         <div className="lg:tooltip" data-tip="Click to add a new product">
@@ -419,7 +503,7 @@ const ProductContainer = () => {
               <th className="text-center">Actions</th>
             </tr>
           </thead>
-         
+
           <tbody>
             {isProductsLoading ? (
               <p className="text-green-500">Loading...</p>
