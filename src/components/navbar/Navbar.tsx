@@ -3,11 +3,9 @@ import logoIcon from "../../../public/assets/flowerLogo.png";
 import { Link } from "react-router-dom";
 import { useGetProductsQuery } from "@/redux/api/api";
 const Navbar = () => {
-  const {
-    data: productsData,
-  } = useGetProductsQuery({ addedToCart: true });
+  const { data: productsData } = useGetProductsQuery({ addedToCart: true });
 
-    // Calculate total items and total price
+  // Calculate total items and total price
   const cartProducts = productsData?.data || [];
   const totalItems = cartProducts.length;
   return (
@@ -34,7 +32,7 @@ const Navbar = () => {
               <span>
                 <FaCartPlus className="text-3xl font-black" />
               </span>
-              <div className="w-6 h-6 border border-lime-900 rounded-full absolute -top-5 -right-5 text-lime-500 flex justify-center items-center font-bold text-xl z-10">
+              <div className="w-6 h-6 border border-lime-200 bg-lime-300 rounded-full absolute -top-5 -right-5 text-lime-950 flex justify-center items-center font-bold text-lg z-10">
                 {totalItems}
               </div>
             </div>

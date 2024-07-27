@@ -1,10 +1,14 @@
 import Banner from "@/components/banner/Banner";
 import ProductContainer from "@/components/floralHome/ProductContainer";
 import Shine from "@/components/shine/Shine";
+import { Helmet } from "react-helmet-async";
 
 const FloralHome = () => {
   return (
     <>
+      <Helmet>
+        <title>Floral Fantasy | Home</title>
+      </Helmet>
       <div className="bg-black/80 text-white">
         <Banner />
       </div>
@@ -14,7 +18,6 @@ const FloralHome = () => {
       <div className="bg-black text-white">
         <Shine />
       </div>
-      
     </>
   );
 };

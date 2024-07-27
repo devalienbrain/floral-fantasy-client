@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 // import { Dialog, Transition } from "@headlessui/react";
 import { Elements } from "@stripe/react-stripe-js";
 import { Fragment } from "react";
@@ -8,7 +7,7 @@ import PaymentForm from "./PaymentForm";
 const stripePromise = loadStripe(import.meta.env.VITE_PAYMENT_PK);
 // console.log(import.meta.env.VITE_PAYMENT_PK);
 
-export default function Pay({data, isOpen, closeModal }) {
+export default function Pay({ data, isOpen, closeModal }) {
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>

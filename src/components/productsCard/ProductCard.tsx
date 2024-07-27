@@ -11,6 +11,14 @@ interface ProductCardProps {
   rating: number;
   image: string;
 }
+const productAddedToCart = async () => {
+  try {
+    await updateProduct({ id: _id, data: { addedToCart: true } });
+    toast("Product added to cart successfully!");
+  } catch (error) {
+    console.error("Failed to update product", error);
+  }
+};
 
 const ProductCard: FC<ProductCardProps> = ({
   _id,
@@ -43,14 +51,18 @@ const ProductCard: FC<ProductCardProps> = ({
             </Link>
           </div>
           <p>If a dog chews shoes whose shoes does he choose?</p>
-          <div className="card-actions justify-end">
-            <div className="flex gap-2">
-              <Link to={`/products/${_id}`}>
-                <button className="px-6 py-3 mt-4 border border-lime-500 hover:bg-lime-500 hover:text-white rounded-md transition duration-300">
-                  View details
-                </button>
-              </Link>
-            </div>
+          <div className="flex justify-between items-center">
+            <Link to={`/products/${_id}`}>
+              <button className="px-6 py-3 mt-4 border border-lime-500 hover:bg-lime-500 hover:text-white rounded-md transition duration-300">
+                View details
+              </button>
+            </Link>
+            <button
+              onClick={() => productAddedToCart()}
+              className="px-6 py-3 mt-4 bg-lime-600 hover:bg-lime-500 text-white rounded-md transition duration-300"
+            >
+              Add to Cart
+            </button>
           </div>
         </div>
       </div>

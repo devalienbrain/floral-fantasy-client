@@ -1,9 +1,12 @@
 const Footer = () => {
   return (
     <>
-      <div className="py-5 flex justify-center items-center ">
-        <span>All rigts preserved by dr-fatiha sultana</span>
-      </div>
+      <p className="py-5 flex justify-center items-center ">
+        <small>
+          Copyright © {new Date().getFullYear()} - All right reserved by
+          dr-fatiha sultana
+        </small>
+      </p>
     </>
   );
 };
