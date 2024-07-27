@@ -5,36 +5,32 @@ export const baseApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000' }),
   tagTypes: ['Product', 'Category'],
   endpoints: (builder) => ({
+    // Products
     getProducts: builder.query({
-      query: ({ category, search, page=1, limit=12, sortBy, sortOrder, addedToCart }) => {
+      query: ({ category, search, page = 1, limit = 12, sortBy, sortOrder, addedToCart }) => {
         const params = new URLSearchParams();
         if (category) params.append('category', category);
         if (search) params.append('search', search);
-        if (page) params.append('page', page);
-        if (limit) params.append('limit', limit);
+        if (page) params.append('page', page.toString());
+        if (limit) params.append('limit', limit.toString());
         if (sortBy) params.append('sortBy', sortBy);
         if (sortOrder) params.append('sortOrder', sortOrder);
-        if (addedToCart !== undefined) params.append('addedToCart', addedToCart);
+        if (addedToCart !== undefined) params.append('addedToCart', addedToCart.toString());
         return { url: '/products', params };
       },
-      providesTags: ['Product']
+      providesTags: ['Product'],
     }),
-    
     getProductById: builder.query({
       query: (id) => ({ url: `/products/${id}` }),
-      providesTags: ['Product']
+      providesTags: ['Product'],
     }),
     addProduct: builder.mutation({
-      
       query: (data) => ({
-        
-        
         url: '/products',
         method: 'POST',
         body: data,
       }),
-      
-      invalidatesTags: ['Product']
+      invalidatesTags: ['Product'],
     }),
     updateProduct: builder.mutation({
       query: ({ id, data }) => ({
@@ -42,20 +38,20 @@ export const baseApi = createApi({
         method: 'PUT',
         body: data,
       }),
-      invalidatesTags: ['Product']
+      invalidatesTags: ['Product'],
     }),
     deleteProduct: builder.mutation({
       query: (id) => ({
         url: `/products/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['Product']
+      invalidatesTags: ['Product'],
     }),
 
     // Categories
     getCategories: builder.query({
       query: () => ({ url: '/categories' }),
-      providesTags: ['Category']
+      providesTags: ['Category'],
     }),
     addCategory: builder.mutation({
       query: (data) => ({
@@ -63,7 +59,7 @@ export const baseApi = createApi({
         method: 'POST',
         body: data,
       }),
-      invalidatesTags: ['Category']
+      invalidatesTags: ['Category'],
     }),
     updateCategory: builder.mutation({
       query: ({ id, data }) => ({
@@ -71,14 +67,14 @@ export const baseApi = createApi({
         method: 'PUT',
         body: data,
       }),
-      invalidatesTags: ['Category']
+      invalidatesTags: ['Category'],
     }),
     deleteCategory: builder.mutation({
       query: (id) => ({
         url: `/categories/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['Category']
+      invalidatesTags: ['Category'],
     }),
   }),
 });

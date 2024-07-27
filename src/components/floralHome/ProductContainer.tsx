@@ -45,7 +45,6 @@ const ProductContainer = () => {
   const [addCategory, { isLoading: isAddingCategory }] =
     useAddCategoryMutation();
   const [addProduct, { isLoading: isAddingProduct }] = useAddProductMutation();
-  
 
   const {
     data: categories,
@@ -91,8 +90,6 @@ const ProductContainer = () => {
     }
   };
 
-  
-
   const handlePageChange = (newPage) => {
     setPage(newPage);
   };
@@ -100,7 +97,7 @@ const ProductContainer = () => {
   return (
     <>
       <Toaster />
-     
+
       {/* Category Container */}
       <div>
         <h1 className="text-center py-10 text-6xl font-bold">Categories</h1>
@@ -149,11 +146,11 @@ const ProductContainer = () => {
         </div>
 
         {/* Add a category modal*/}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-5">
           {categories?.data?.map((category: CategoryCardProps, index) => (
             <div key={index} className="bg-black/5 shadow-md px-10 rounded-xl">
               <div className="p-4">
-                <p className="text-lime-950 text-xl font-bold">
+                <p className="text-lime-600 text-xl font-black">
                   {category.name}
                 </p>
               </div>

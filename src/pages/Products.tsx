@@ -109,7 +109,9 @@ const Products = () => {
       </Helmet>
 
       <div className="p-10">
-        <h1 className="text-center py-10 text-6xl font-bold">Products</h1>
+        <h1 className="text-center py-10 text-6xl font-bold">
+          Products Management
+        </h1>
         <div className="mx-auto flex justify-center text-white pb-10">
           <div className="lg:tooltip" data-tip="Click to add a new product">
             <button
