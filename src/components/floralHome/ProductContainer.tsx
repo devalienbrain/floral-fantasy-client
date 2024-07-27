@@ -10,6 +10,7 @@ import {
   useUpdateProductMutation,
   useDeleteProductMutation,
 } from "@/redux/api/api";
+import toast, { Toaster } from "react-hot-toast";
 
 type TProduct = {
   _id: string;
@@ -69,6 +70,7 @@ const ProductContainer = () => {
       await addCategory({ name: newCategoryName }).unwrap();
       setNewCategoryName("");
       document.getElementById("my_modal_5").close();
+      toast('Category added!')
     } catch (error) {
       console.error("Failed to add category", error);
     }
@@ -89,25 +91,12 @@ const ProductContainer = () => {
       });
       console.log(newProduct);
       document.getElementById("my_modal_6").close();
+      toast('Product added successfully!')
     } catch (error) {
       console.error("Failed to add product", error);
     }
   };
 
-  // const handleUpdateProduct = async () => {
-  //   if (editingProduct) {
-  //     try {
-  //       await updateProduct({
-  //         id: editingProduct._id,
-  //         data: editingProduct,
-  //       }).unwrap();
-  //       setEditingProduct(null);
-  //       document.getElementById("edit_modal").close();
-  //     } catch (error) {
-  //       console.error("Failed to update product", error);
-  //     }
-  //   }
-  // };
 
   const handleUpdateProduct = async () => {
     if (editingProduct) {
@@ -124,7 +113,6 @@ const ProductContainer = () => {
       }
     }
   };
-  
 
   const handleEditProduct = (id: string) => {
     const product = productsData.data.find((p: TProduct) => p._id === id);
@@ -137,6 +125,7 @@ const ProductContainer = () => {
     try {
       await deleteProduct(id).unwrap();
       // Optionally, refetch the products list or update the local state
+      toast('Product deleted!')
     } catch (error) {
       console.error("Failed to delete product", error);
     }
@@ -148,7 +137,8 @@ const ProductContainer = () => {
 
   return (
     <>
-      // Edit/ update modal starts
+    <Toaster/>
+      {/* Edit/ update modal starts */}
       <dialog id="edit_modal" className="modal modal-bottom sm:modal-middle ">
         <div className="modal-box bg-lime-600 text-white">
           <h3 className="font-bold text-lg">Edit product</h3>
@@ -267,7 +257,7 @@ const ProductContainer = () => {
           </div>
         </div>
       </dialog>
-      ; // Edit/ update modal Ends
+      {/* Edit/ update modal Ends */}
       {/* Category Container */}
       <div>
         <h1 className="text-center py-10 text-6xl font-bold">Categories</h1>

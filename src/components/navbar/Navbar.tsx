@@ -34,7 +34,7 @@ const Navbar = () => {
               <span>
                 <FaCartPlus className="text-3xl font-black" />
               </span>
-              <div className="w-6 h-6 border border-lime-900 rounded-full absolute -top-3 -right-3 text-lime-600 flex justify-center items-center font-bold z-10">
+              <div className="w-6 h-6 border border-lime-900 rounded-full absolute -top-5 -right-5 text-lime-500 flex justify-center items-center font-bold text-xl z-10">
                 {totalItems}
               </div>
             </div>

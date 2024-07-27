@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useGetProductsQuery, useUpdateProductMutation } from "@/redux/api/api";
 import { Link } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 
 type TProduct = {
   _id: string;
@@ -26,6 +27,7 @@ const Cart = () => {
   const handleRemoveFromCart = async (product: TProduct) => {
     const updatedProduct = { ...product, addedToCart: false };
     await updateProduct({ id: product._id, data: updatedProduct });
+    toast('Product removed from Cart!');
   };
 
   // Calculate total items and total price
@@ -34,7 +36,8 @@ const Cart = () => {
   const totalPrice = cartProducts.reduce((sum, product) => sum + product.price, 0);
 
   return (
-    <div className="p-10 bg-gradient-to-b from-black/80 va-black/90 to-black text-white">
+    <div className="p-10 text-black">
+      <Toaster/>
       <h1 className="text-center py-10 text-6xl font-black text-red-600">
         My Cart
       </h1>
@@ -42,9 +45,9 @@ const Cart = () => {
       <div className="py-5">
         <div className="flex justify-between items-center">
           <div className="font-bold text-xl ">Total Items = {totalItems}</div>
-          <div className="font-bold text-xl text-lime-500">Total Price = ${totalPrice.toFixed(2)}</div>
+          <div className="font-bold text-xl text-lime-600">Total Price = ${totalPrice.toFixed(2)}</div>
           <Link to="/payment">
-            <button className="px-6 py-3 hover:bg-white hover:text-black bg-lime-500 text-white shadow-xl rounded-md transition duration-300">
+            <button className="px-6 py-3 hover:bg-white hover:text-black bg-lime-800 text-white shadow-xl rounded-md transition duration-300">
               Checkout
             </button>
           </Link>
@@ -56,7 +59,7 @@ const Cart = () => {
         <table className="table">
           {/* head */}
           <thead>
-            <tr className="font-bold text-base text-white">
+            <tr className="font-bold text-base">
               <th className="text-left">SI</th>
               <th className="text-left font-bold">Title</th>
               <th className="text-left">Category</th>

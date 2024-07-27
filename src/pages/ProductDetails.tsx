@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { useParams } from "react-router-dom";
 import { useGetProductByIdQuery, useUpdateProductMutation } from "@/redux/api/api";
+import toast, { Toaster } from "react-hot-toast";
 
 interface ProductDetailsProps {}
 
@@ -32,6 +33,7 @@ const ProductDetails: FC<ProductDetailsProps> = () => {
   const productAddedToCart = async () => {
     try {
       await updateProduct({ id: _id, data: { addedToCart: true } });
+      toast("Product added to cart successfully!")
     } catch (error) {
       console.error("Failed to update product", error);
     }
@@ -39,6 +41,7 @@ const ProductDetails: FC<ProductDetailsProps> = () => {
 
   return (
     <div className="p-10 border rounded-lg shadow-md">
+      <Toaster/>
       <img
         src={image}
         alt={title}
