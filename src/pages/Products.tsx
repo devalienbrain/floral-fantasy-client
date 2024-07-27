@@ -23,6 +23,10 @@ type TProduct = {
   image: string;
 };
 
+interface CategoryCardProps {
+  name: string;
+}
+
 const Products = () => {
   const [category, setCategory] = useState("");
   const [newProduct, setNewProduct] = useState({
@@ -245,35 +249,24 @@ const Products = () => {
         </div>
         {/* Set page limit And Products search part */}
         <div className="py-5">
-          <div className="flex justify-between items-center">
-            <div className="flex justify-end gap-3 items-center">
-              <button
-                onClick={() => setCategory("price")}
-                className="px-6 py-3 border border-black hover:bg-black text-black hover:text-white rounded-md transition duration-300"
-              >
-                Sort by price
-              </button>
-              <button
-                onClick={() => setCategory("category")}
-                className="px-6 py-3 border border-black hover:bg-black text-black hover:text-white rounded-md transition duration-300"
-              >
-                Sort by category
-              </button>
-            </div>
-            <div className="flex justify-center items-center">
-              <input
-                type="text"
-                // value={newProduct.title}
-                placeholder="Product title"
-                className="input input-bordered rounded-r-none w-full bg-white text-black border border-black"
-              />
-              <button
-                onClick={() => setCategory("category")}
-                className="px-6 py-3 border bg-black text-white rounded-md rounded-l-none transition duration-300"
-              >
-                Search
-              </button>
-            </div>
+          <div className="flex w-full">
+            <select
+              value={category}
+              onChange={(e) => {
+                setCategory(e.target.value);
+                setPage(1);
+              }}
+              className="px-6 py-3 w-full border border-black rounded-md bg-white text-black"
+            >
+              <option value="">All Categories</option>
+              {categoriesData?.data?.map(
+                (category: CategoryCardProps, index) => (
+                  <option key={index} value={category.name}>
+                    {category.name}
+                  </option>
+                )
+              )}
+            </select>
           </div>
         </div>
         {/* Products table */}

@@ -1,12 +1,6 @@
 import { useState } from "react";
-import { MdOutlineNavigateNext } from "react-icons/md";
-import { MdOutlineNavigateBefore } from "react-icons/md";
-import {
-  useGetCategoriesQuery,
-  useGetProductsQuery,
-  useAddCategoryMutation,
-  useAddProductMutation,
-} from "@/redux/api/api";
+import { MdOutlineNavigateNext, MdOutlineNavigateBefore } from "react-icons/md";
+import { useGetCategoriesQuery, useGetProductsQuery } from "@/redux/api/api";
 import toast, { Toaster } from "react-hot-toast";
 import ProductCard from "../productsCard/ProductCard";
 
@@ -28,8 +22,11 @@ interface CategoryCardProps {
 
 const ProductContainer = () => {
   const [category, setCategory] = useState("");
+  const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-  const [limit] = useState(12);
+  const [limit, setLimit] = useState(12);
+  const [sortBy, setSortBy] = useState("name");
+  const [sortOrder, setSortOrder] = useState("asc");
 
   const {
     data: categories,
@@ -41,11 +38,19 @@ const ProductContainer = () => {
     data: productsData,
     isLoading: isProductsLoading,
     isError: isProductsError,
-  } = useGetProductsQuery({ category, page, limit });
-  // console.log(productsData);
+  } = useGetProductsQuery({ category, search, page, limit, sortBy, sortOrder });
 
   const handlePageChange = (newPage) => {
     setPage(newPage);
+  };
+
+  const handleSearch = () => {
+    setPage(1);
+  };
+
+  const handleSortChange = (sortField) => {
+    setSortBy(sortField);
+    setSortOrder(sortOrder === "asc" ? "desc" : "asc");
   };
 
   return (
@@ -57,7 +62,7 @@ const ProductContainer = () => {
         <hr />
         <h1 className="text-center py-10 text-6xl font-bold">Categories</h1>
         <hr />
-        {/* Category cards*/}
+        {/* Category cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-5 pt-24">
           {categories?.data?.map((category: CategoryCardProps, index) => (
             <div key={index} className="bg-black/5 shadow-md px-10 rounded-xl">
@@ -70,7 +75,8 @@ const ProductContainer = () => {
           ))}
         </div>
       </div>
-      {/* Category Container and cards part Ends here*/}
+      {/* Category Container and cards part Ends here */}
+
       {/* Products container and card Starts here */}
       <div className="py-24">
         <hr />
@@ -78,33 +84,52 @@ const ProductContainer = () => {
         <hr />
         {/* Set page limit And Products search part */}
         <div className="py-5">
-          <div className="flex justify-between items-center">
-            <div className="flex justify-end gap-3 items-center">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="flex-1 flex md:justify-start items-center gap-2">
+              <span>Search by category</span>
+              <select
+                value={category}
+                onChange={(e) => {
+                  setCategory(e.target.value);
+                  setPage(1);
+                }}
+                className="px-6 py-3 border border-black rounded-md bg-white text-black"
+              >
+                <option value="">All Categories</option>
+                {categories?.data?.map((category: CategoryCardProps, index) => (
+                  <option key={index} value={category.name}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="flex-1 flex md:justify-center items-center gap-0">
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="write keyword"
+                className="input input-bordered rounded-r-none w-full bg-white text-black border border-black"
+              />
               <button
-                onClick={() => setCategory("price")}
+                onClick={handleSearch}
+                className="px-6 py-3 border bg-black text-white rounded-md rounded-l-none transition duration-300"
+              >
+                Search
+              </button>
+            </div>
+            <div className="flex-1 flex md:justify-end gap-3 items-center">
+              <button
+                onClick={() => handleSortChange("price")}
                 className="px-6 py-3 border border-black hover:bg-black text-black hover:text-white rounded-md transition duration-300"
               >
                 Sort by price
               </button>
               <button
-                onClick={() => setCategory("category")}
+                onClick={() => handleSortChange("name")}
                 className="px-6 py-3 border border-black hover:bg-black text-black hover:text-white rounded-md transition duration-300"
               >
-                Sort by category
-              </button>
-            </div>
-            <div className="flex justify-center items-center">
-              <input
-                type="text"
-                // value={newProduct.title}
-                placeholder="Product title"
-                className="input input-bordered rounded-r-none w-full bg-white text-black border border-black"
-              />
-              <button
-                onClick={() => setCategory("category")}
-                className="px-6 py-3 border bg-black text-white rounded-md rounded-l-none transition duration-300"
-              >
-                Search
+                Sort by name
               </button>
             </div>
           </div>
