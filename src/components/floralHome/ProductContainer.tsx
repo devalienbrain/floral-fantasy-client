@@ -28,23 +28,8 @@ interface CategoryCardProps {
 
 const ProductContainer = () => {
   const [category, setCategory] = useState("");
-  const [newCategoryName, setNewCategoryName] = useState("");
-  const [newProduct, setNewProduct] = useState({
-    title: "",
-    price: 0,
-    category: "",
-    quantity: 0,
-    description: "",
-    rating: 0,
-    image: "",
-    addedToCart: false,
-  });
   const [page, setPage] = useState(1);
   const [limit] = useState(12);
-
-  const [addCategory, { isLoading: isAddingCategory }] =
-    useAddCategoryMutation();
-  const [addProduct, { isLoading: isAddingProduct }] = useAddProductMutation();
 
   const {
     data: categories,

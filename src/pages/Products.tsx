@@ -1,14 +1,17 @@
 import { useState } from "react";
 import { MdOutlineNavigateNext } from "react-icons/md";
 import { MdOutlineNavigateBefore } from "react-icons/md";
-import { useGetProductsQuery, useAddProductMutation } from "@/redux/api/api";
-import { Helmet } from "react-helmet-async";
-import ProductTable from "@/components/floralHome/ProductTable";
 import {
+  useGetProductsQuery,
+  useAddProductMutation,
+  useGetCategoriesQuery,
   useUpdateProductMutation,
   useDeleteProductMutation,
 } from "@/redux/api/api";
+import { Helmet } from "react-helmet-async";
 import toast from "react-hot-toast";
+import ProductTable from "@/components/floralHome/ProductTable";
+
 type TProduct = {
   _id: string;
   title: string;
@@ -34,14 +37,22 @@ const Products = () => {
   const [page, setPage] = useState(1);
   const [limit] = useState(10);
 
+  const {
+    data: categoriesData,
+    isLoading: isCategoriesLoading,
+    isError: isCategoriesError,
+  } = useGetCategoriesQuery();
   const [addProduct, { isLoading: isAddingProduct }] = useAddProductMutation();
-
   const {
     data: productsData,
     isLoading: isProductsLoading,
     isError: isProductsError,
   } = useGetProductsQuery({ category, page, limit });
-  console.log(productsData);
+  const [updateProduct, { isLoading: isUpdatingProduct }] =
+    useUpdateProductMutation();
+  const [deleteProduct, { isLoading: isDeletingProduct }] =
+    useDeleteProductMutation();
+  const [editingProduct, setEditingProduct] = useState<TProduct | null>(null);
 
   const handleAddProduct = async () => {
     try {
@@ -55,42 +66,32 @@ const Products = () => {
         rating: 0,
         image: "",
       });
-      console.log(newProduct);
       document.getElementById("my_modal_6").close();
     } catch (error) {
       console.error("Failed to add product", error);
     }
   };
 
-  const [updateProduct, { isLoading: isUpdatingProduct }] =
-    useUpdateProductMutation();
-  const [deleteProduct, { isLoading: isDeletingProduct }] =
-    useDeleteProductMutation();
-  const [editingProduct, setEditingProduct] = useState<TProduct | null>(null);
   const handleEditProduct = (id: string) => {
     const product = productsData.data.find((p: TProduct) => p._id === id);
     setEditingProduct(product);
-    console.log(product);
     document.getElementById("edit_modal").showModal();
   };
 
   const handleDeleteProduct = async (id: string) => {
     try {
       await deleteProduct(id).unwrap();
-      // Optionally, refetch the products list or update the local state
       toast("Product deleted!");
     } catch (error) {
       console.error("Failed to delete product", error);
     }
   };
+
   const handleUpdateProduct = async () => {
     if (editingProduct) {
       try {
-        const { _id, ...updateData } = editingProduct; // Exclude _id from update data
-        await updateProduct({
-          id: _id,
-          data: updateData,
-        }).unwrap();
+        const { _id, ...updateData } = editingProduct;
+        await updateProduct({ id: _id, data: updateData }).unwrap();
         setEditingProduct(null);
         document.getElementById("edit_modal").close();
       } catch (error) {
@@ -98,6 +99,7 @@ const Products = () => {
       }
     }
   };
+
   const handlePageChange = (newPage) => {
     setPage(newPage);
   };
@@ -122,7 +124,6 @@ const Products = () => {
             </button>
           </div>
 
-          {/* Open the modal using document.getElementById('my_modal_6').showModal() method */}
           <dialog
             id="my_modal_6"
             className="modal modal-bottom sm:modal-middle"
@@ -130,7 +131,6 @@ const Products = () => {
             <div className="modal-box">
               <h3 className="font-bold text-lg">Add a new product</h3>
               <div className="py-4">
-                {/* Product form inputs */}
                 <label>Title</label>
                 <input
                   type="text"
@@ -155,15 +155,26 @@ const Products = () => {
                   className="input input-bordered w-full mt-4"
                 />
                 <label>Category</label>
-                <input
-                  type="text"
+                <select
                   value={newProduct.category}
                   onChange={(e) =>
                     setNewProduct({ ...newProduct, category: e.target.value })
                   }
-                  placeholder="Product category"
                   className="input input-bordered w-full mt-4"
-                />
+                >
+                  <option value="">Select category</option>
+                  {isCategoriesLoading ? (
+                    <option>Loading categories...</option>
+                  ) : isCategoriesError ? (
+                    <option>Error loading categories</option>
+                  ) : (
+                    categoriesData.data.map((category) => (
+                      <option key={category._id} value={category.name}>
+                        {category.name}
+                      </option>
+                    ))
+                  )}
+                </select>
                 <label>Quantity</label>
                 <input
                   type="number"
