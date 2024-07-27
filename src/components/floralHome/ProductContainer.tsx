@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ProductCard from "./ProductTable";
+import ProductTable from "./ProductTable";
 import { MdOutlineNavigateNext } from "react-icons/md";
 import { MdOutlineNavigateBefore } from "react-icons/md";
 import {
@@ -7,6 +7,8 @@ import {
   useGetProductsQuery,
   useAddCategoryMutation,
   useAddProductMutation,
+  useUpdateProductMutation,
+  useDeleteProductMutation,
 } from "@/redux/api/api";
 
 type TProduct = {
@@ -44,6 +46,11 @@ const ProductContainer = () => {
   const [addCategory, { isLoading: isAddingCategory }] =
     useAddCategoryMutation();
   const [addProduct, { isLoading: isAddingProduct }] = useAddProductMutation();
+  const [updateProduct, { isLoading: isUpdatingProduct }] =
+    useUpdateProductMutation();
+  const [deleteProduct, { isLoading: isDeletingProduct }] =
+    useDeleteProductMutation();
+  const [editingProduct, setEditingProduct] = useState<TProduct | null>(null);
 
   const {
     data: categories,
@@ -87,29 +94,92 @@ const ProductContainer = () => {
     }
   };
 
-  const handleDeleteProduct = async () => {
+  const handleUpdateProduct = async () => {
+    if (editingProduct) {
+      try {
+        await updateProduct({
+          id: editingProduct._id,
+          data: editingProduct,
+        }).unwrap();
+        setEditingProduct(null);
+        document.getElementById("edit_modal").close();
+      } catch (error) {
+        console.error("Failed to update product", error);
+      }
+    }
+  };
+
+  const handleEditProduct = (id: string) => {
+    const product = productsData.data.find((p: TProduct) => p._id === id);
+    setEditingProduct(product);
+    document.getElementById("edit_modal").showModal();
+  };
+
+  const handleDeleteProduct = async (id: string) => {
     try {
-      await addProduct(newProduct).unwrap();
-      setNewProduct({
-        title: "",
-        price: 0,
-        category: "",
-        quantity: 0,
-        description: "",
-        rating: 0,
-        image: "",
-        addedToCart: false,
-      });
-      console.log(newProduct);
-      document.getElementById("my_modal_6").close();
+      await deleteProduct(id).unwrap();
+      // Optionally, refetch the products list or update the local state
     } catch (error) {
-      console.error("Failed to add product", error);
+      console.error("Failed to delete product", error);
     }
   };
 
   const handlePageChange = (newPage) => {
     setPage(newPage);
   };
+
+  // Edit/ update modal starts
+  <dialog id="edit_modal" className="modal modal-bottom sm:modal-middle">
+    <div className="modal-box">
+      <h3 className="font-bold text-lg">Edit product</h3>
+      {editingProduct && (
+        <div className="py-4">
+          <label>Title</label>
+          <input
+            type="text"
+            value={editingProduct.title}
+            onChange={(e) =>
+              setEditingProduct({ ...editingProduct, title: e.target.value })
+            }
+            placeholder="Product title"
+            className="input input-bordered w-full"
+          />
+          {/* Repeat for other fields */}
+          <label>Price</label>
+          <input
+            type="number"
+            value={editingProduct.price}
+            onChange={(e) =>
+              setEditingProduct({
+                ...editingProduct,
+                price: parseFloat(e.target.value),
+              })
+            }
+            placeholder="Product price"
+            className="input input-bordered w-full mt-4"
+          />
+          {/* Add other fields similarly */}
+        </div>
+      )}
+      <div className="modal-action">
+        <button
+          className="btn"
+          onClick={handleUpdateProduct}
+          disabled={isUpdatingProduct}
+        >
+          {isUpdatingProduct ? "Updating..." : "Update"}
+        </button>
+        <button
+          className="btn"
+          onClick={() => document.getElementById("edit_modal").close()}
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </dialog>;
+
+  // Edit/ update modal Ends
 
   return (
     <>
@@ -349,6 +419,7 @@ const ProductContainer = () => {
               <th className="text-center">Actions</th>
             </tr>
           </thead>
+         
           <tbody>
             {isProductsLoading ? (
               <p className="text-green-500">Loading...</p>
@@ -356,7 +427,12 @@ const ProductContainer = () => {
               <p className="text-red-500">Oops! Error loading products</p>
             ) : (
               productsData?.data?.map((product: TProduct) => (
-                <ProductCard key={product._id} {...product} />
+                <ProductTable
+                  key={product._id}
+                  {...product}
+                  onEdit={handleEditProduct}
+                  onDelete={handleDeleteProduct}
+                />
               ))
             )}
           </tbody>

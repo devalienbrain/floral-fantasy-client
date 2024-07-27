@@ -10,6 +10,8 @@ interface ProductCardProps {
   description: string;
   rating: number;
   image: string;
+  onEdit: (id: string) => void;
+  onDelete: (id: string) => void;
 }
 
 const ProductTable: FC<ProductCardProps> = ({
@@ -21,6 +23,8 @@ const ProductTable: FC<ProductCardProps> = ({
   description,
   rating,
   image,
+  onEdit,
+  onDelete,
 }) => {
   return (
     <tr>
@@ -32,26 +36,20 @@ const ProductTable: FC<ProductCardProps> = ({
       <td>
         <div className="font-bold">{title}</div>
         <div>
-          <Link
-            to={`/products/${_id}`}
-            className="text-blue-500 hover:underline"
-          >
+          <Link to={`/products/${_id}`} className="text-blue-500 hover:underline">
             {_id}
           </Link>
         </div>
       </td>
       <td>{price} $</td>
       <td className="font-bold">{category}</td>
-      <td>
-        <div className="flex justify-center">
-          <button className="px-6 py-3 hover:text-lime-500 transition duration-300">
-            Update
-          </button>
-
-          <button className="px-6 py-3 hover:text-red-600 transition duration-300">
-            Delete
-          </button>
-        </div>
+      <td className="flex justify-center gap-2">
+        <button onClick={() => onEdit(_id)} className="btn btn-warning">
+          Edit
+        </button>
+        <button onClick={() => onDelete(_id)} className="btn btn-error">
+          Delete
+        </button>
       </td>
     </tr>
   );
