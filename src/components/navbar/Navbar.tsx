@@ -22,9 +22,14 @@ const Navbar = () => {
             <span className="hover:text-lime-600">Products</span>
           </Link>
           <Link to="cart">
-            <span>
-              <FaCartPlus className="text-3xl font-black" />
-            </span>
+            <div className="relative">
+              <span>
+                <FaCartPlus className="text-3xl font-black" />
+              </span>
+              <div className="w-6 h-6 border border-red-600 rounded-full absolute -top-3 -right-3 text-red-600 flex justify-center items-center font-semibold z-10">
+                5
+              </div>
+            </div>
           </Link>
         </div>
       </div>

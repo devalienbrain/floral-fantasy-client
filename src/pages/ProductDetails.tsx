@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { useParams } from "react-router-dom";
-import { useGetProductByIdQuery } from "@/redux/api/api";
+import { useGetProductByIdQuery, useUpdateProductMutation } from "@/redux/api/api";
 
 interface ProductDetailsProps {}
 
@@ -12,10 +12,13 @@ const ProductDetails: FC<ProductDetailsProps> = () => {
     isError: isProductsError,
   } = useGetProductByIdQuery(id);
 
+  const [updateProduct] = useUpdateProductMutation();
+
   if (isProductsLoading) return <div>Loading...</div>;
   if (isProductsError || !product) return <div>Error loading product</div>;
 
   const {
+    _id,
     title,
     price,
     category,
@@ -26,8 +29,12 @@ const ProductDetails: FC<ProductDetailsProps> = () => {
     addedToCart,
   } = product.data;
 
-  const productAddedToCart = () => {
-    product.data.addedToCart = true;
+  const productAddedToCart = async () => {
+    try {
+      await updateProduct({ id: _id, data: { addedToCart: true } });
+    } catch (error) {
+      console.error("Failed to update product", error);
+    }
   };
 
   return (
@@ -35,7 +42,7 @@ const ProductDetails: FC<ProductDetailsProps> = () => {
       <img
         src={image}
         alt={title}
-        className="w-full h-48 object-cover rounded-lg mb-4"
+        className="w-full h-full object-contain rounded-lg mb-4"
       />
       <h2 className="text-xl font-semibold">{title}</h2>
       <p className="text-gray-700">{description}</p>

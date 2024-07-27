@@ -45,13 +45,11 @@ const ProductCard: FC<ProductCardProps> = ({
           <p>If a dog chews shoes whose shoes does he choose?</p>
           <div className="card-actions justify-end">
             <div className="flex gap-2">
-              <button className="px-6 py-3 mt-4 border border-lime-500 hover:bg-lime-500 hover:text-white rounded-md transition duration-300">
-                Update
-              </button>
-
-              <button className="px-6 py-3 mt-4 border border-red-600 hover:bg-red-600 hover:text-white rounded-md transition duration-300">
-                Delete
-              </button>
+              <Link to={`/products/${_id}`}>
+                <button className="px-6 py-3 mt-4 border border-lime-500 hover:bg-lime-500 hover:text-white rounded-md transition duration-300">
+                  View details
+                </button>
+              </Link>
             </div>
           </div>
         </div>

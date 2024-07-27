@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { useGetProductsQuery } from "@/redux/api/api";
-import CartItemsCard from "@/components/cartItemsCard/CartItemsCard";
+import { useGetProductsQuery, useUpdateProductMutation } from "@/redux/api/api";
 import { Link } from "react-router-dom";
 
 type TProduct = {
@@ -12,25 +11,27 @@ type TProduct = {
   description: string;
   rating: number;
   image: string;
+  addedToCart: boolean;
 };
 
 const Cart = () => {
-  const [newProduct, setNewProduct] = useState({
-    title: "",
-    price: 0,
-    category: "",
-    quantity: 0,
-    description: "",
-    rating: 0,
-    image: "",
-  });
-
   const {
     data: productsData,
     isLoading: isProductsLoading,
     isError: isProductsError,
-  } = useGetProductsQuery({});
-  console.log(productsData);
+  } = useGetProductsQuery({ addedToCart: true });
+
+  const [updateProduct] = useUpdateProductMutation();
+
+  const handleRemoveFromCart = async (product: TProduct) => {
+    const updatedProduct = { ...product, addedToCart: false };
+    await updateProduct({ id: product._id, data: updatedProduct });
+  };
+
+  // Calculate total items and total price
+  const cartProducts = productsData?.data || [];
+  const totalItems = cartProducts.length;
+  const totalPrice = cartProducts.reduce((sum, product) => sum + product.price, 0);
 
   return (
     <div className="p-10 bg-gradient-to-b from-black/80 va-black/90 to-black text-white">
@@ -40,8 +41,8 @@ const Cart = () => {
       {/* To Checkout/Payment */}
       <div className="py-5">
         <div className="flex justify-between items-center">
-          <div className="font-bold text-xl ">Total Items = ?</div>
-          <div className="font-bold text-xl text-lime-500">Total Price = ?</div>
+          <div className="font-bold text-xl ">Total Items = {totalItems}</div>
+          <div className="font-bold text-xl text-lime-500">Total Price = ${totalPrice.toFixed(2)}</div>
           <Link to="/payment">
             <button className="px-6 py-3 hover:bg-white hover:text-black bg-lime-500 text-white shadow-xl rounded-md transition duration-300">
               Checkout
@@ -70,8 +71,22 @@ const Cart = () => {
             ) : isProductsError ? (
               <p className="text-red-500">Oops! Error loading products</p>
             ) : (
-              productsData?.data?.map((product: TProduct) => (
-                <CartItemsCard key={product._id} {...product} />
+              cartProducts.map((product: TProduct, index: number) => (
+                <tr key={product._id}>
+                  <td>{index + 1}</td>
+                  <td>{product.title}</td>
+                  <td>{product.category}</td>
+                  <td><img src={product.image} alt={product.title} width="50" /></td>
+                  <td>${product.price}</td>
+                  <td className="text-center">
+                    <button
+                      onClick={() => handleRemoveFromCart(product)}
+                      className="px-4 py-2 bg-red-600 text-white rounded"
+                    >
+                      Remove
+                    </button>
+                  </td>
+                </tr>
               ))
             )}
           </tbody>
