@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ProductCard from "./ProductCard";
+import ProductCard from "./ProductTable";
 import { MdOutlineNavigateNext } from "react-icons/md";
 import { MdOutlineNavigateBefore } from "react-icons/md";
 import {
@@ -18,6 +18,7 @@ type TProduct = {
   description: string;
   rating: number;
   image: string;
+  addedToCart: boolean;
 };
 
 interface CategoryCardProps {
@@ -35,6 +36,7 @@ const ProductContainer = () => {
     description: "",
     rating: 0,
     image: "",
+    addedToCart: false,
   });
   const [page, setPage] = useState(1);
   const [limit] = useState(10);
@@ -76,6 +78,27 @@ const ProductContainer = () => {
         description: "",
         rating: 0,
         image: "",
+        addedToCart: false,
+      });
+      console.log(newProduct);
+      document.getElementById("my_modal_6").close();
+    } catch (error) {
+      console.error("Failed to add product", error);
+    }
+  };
+
+  const handleDeleteProduct = async () => {
+    try {
+      await addProduct(newProduct).unwrap();
+      setNewProduct({
+        title: "",
+        price: 0,
+        category: "",
+        quantity: 0,
+        description: "",
+        rating: 0,
+        image: "",
+        addedToCart: false,
       });
       console.log(newProduct);
       document.getElementById("my_modal_6").close();

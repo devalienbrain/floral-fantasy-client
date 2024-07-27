@@ -2,7 +2,7 @@ import { useState } from "react";
 import { MdOutlineNavigateNext } from "react-icons/md";
 import { MdOutlineNavigateBefore } from "react-icons/md";
 import { useGetProductsQuery, useAddProductMutation } from "@/redux/api/api";
-import ProductCard from "@/components/floralHome/ProductCard";
+import ProductCard from "@/components/productsCard/ProductCard";
 
 type TProduct = {
   _id: string;
@@ -226,30 +226,18 @@ const Products = () => {
         </div>
       </div>
       {/* Products table */}
-      <div className="overflow-x-auto">
-        <table className="table">
-          {/* head */}
-          <thead>
-            <tr className="font-bold  text-base text-lime-900">
-              <th className="text-left">Image</th>
-              <th className="text-left">Title</th>
-              <th className="text-left">Price</th>
-              <th className="text-left">Category</th>
-              <th className="text-center">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {isProductsLoading ? (
-              <p className="text-green-500">Loading...</p>
-            ) : isProductsError ? (
-              <p className="text-red-500">Oops! Error loading products</p>
-            ) : (
-              productsData?.data?.map((product: TProduct) => (
-                <ProductCard key={product._id} {...product} />
-              ))
-            )}
-          </tbody>
-        </table>
+      <div className="bg-white text-black py-20">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+          {isProductsLoading ? (
+            <p className="text-green-500">Loading...</p>
+          ) : isProductsError ? (
+            <p className="text-red-500">Oops! Error loading products</p>
+          ) : (
+            productsData?.data?.map((product: TProduct) => (
+              <ProductCard key={product._id} {...product} />
+            ))
+          )}
+        </div>
         {/* Pagination */}
         <div className="my-4 flex justify-between items-center">
           <button

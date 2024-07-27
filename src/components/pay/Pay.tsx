@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Dialog, Transition } from "@headlessui/react";
+// import { Dialog, Transition } from "@headlessui/react";
 import { Elements } from "@stripe/react-stripe-js";
 import { Fragment } from "react";
 import { loadStripe } from "@stripe/stripe-js";

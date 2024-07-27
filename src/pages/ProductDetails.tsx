@@ -15,8 +15,20 @@ const ProductDetails: FC<ProductDetailsProps> = () => {
   if (isProductsLoading) return <div>Loading...</div>;
   if (isProductsError || !product) return <div>Error loading product</div>;
 
-  const { title, price, category, quantity, description, rating, image } =
-    product.data;
+  const {
+    title,
+    price,
+    category,
+    quantity,
+    description,
+    rating,
+    image,
+    addedToCart,
+  } = product.data;
+
+  const productAddedToCart = () => {
+    product.data.addedToCart = true;
+  };
 
   return (
     <div className="p-10 border rounded-lg shadow-md">
@@ -32,7 +44,10 @@ const ProductDetails: FC<ProductDetailsProps> = () => {
       <p className="mt-2 text-gray-600">In Stock: {quantity}</p>
       <p className="mt-2 text-yellow-500">Rating: {rating}</p>
       <div className="flex gap-2">
-        <button className="px-6 py-3 mt-4 bg-lime-600 hover:bg-lime-500 text-white rounded-md transition duration-300">
+        <button
+          onClick={() => productAddedToCart()}
+          className="px-6 py-3 mt-4 bg-lime-600 hover:bg-lime-500 text-white rounded-md transition duration-300"
+        >
           Add to Cart
         </button>
       </div>

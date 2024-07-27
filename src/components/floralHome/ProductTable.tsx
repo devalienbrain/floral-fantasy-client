@@ -12,7 +12,7 @@ interface ProductCardProps {
   image: string;
 }
 
-const ProductCard: FC<ProductCardProps> = ({
+const ProductTable: FC<ProductCardProps> = ({
   _id,
   title,
   price,
@@ -43,12 +43,12 @@ const ProductCard: FC<ProductCardProps> = ({
       <td>{price} $</td>
       <td className="font-bold">{category}</td>
       <td>
-        <div className="flex flex-col">
-          <button className="px-6 py-3 mt-4 border border-lime-500 hover:bg-lime-500 hover:text-white rounded-md transition duration-300">
+        <div className="flex justify-center">
+          <button className="px-6 py-3 hover:text-lime-500 transition duration-300">
             Update
           </button>
 
-          <button className="px-6 py-3 mt-4 border border-red-600 hover:bg-red-600 hover:text-white rounded-md transition duration-300">
+          <button className="px-6 py-3 hover:text-red-600 transition duration-300">
             Delete
           </button>
         </div>
@@ -57,4 +57,4 @@ const ProductCard: FC<ProductCardProps> = ({
   );
 };
 
-export default ProductCard;
+export default ProductTable;
