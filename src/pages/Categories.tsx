@@ -26,6 +26,10 @@ const Categories = () => {
   const [deleteCategory, { isLoading: isDeletingCategory }] =
     useDeleteCategoryMutation();
 
+  const [categorytIdToDelete, setCategoryIdToDelete] = useState<string | null>(
+    null
+  );
+
   const {
     data: categoriesData,
     isLoading: isCategoriesLoading,
@@ -66,14 +70,22 @@ const Categories = () => {
       }
     }
   };
+  const handleConfirmDelete = (id: string) => {
+    setCategoryIdToDelete(id);
+    document.getElementById("delete_modal").showModal();
+  };
 
-  const handleDeleteCategory = async (id: string) => {
-    try {
-      await deleteCategory(id).unwrap();
-      toast.success("Category deleted successfully!");
-    } catch (error) {
-      console.error("Failed to delete category", error);
-      toast.error("Failed to delete category");
+  const handleDeleteCategory = async () => {
+    if (categorytIdToDelete) {
+      try {
+        await deleteCategory(categorytIdToDelete).unwrap();
+        toast.success("Category deleted successfully!");
+        setCategoryIdToDelete(null);
+      } catch (error) {
+        console.error("Failed to delete category!", error);
+        toast.error("Failed to delete category!");
+      }
+      document.getElementById("delete_modal").close();
     }
   };
 
@@ -169,7 +181,7 @@ const Categories = () => {
                         </button>
                         <button
                           className="btn btn-sm btn-outline btn-error"
-                          onClick={() => handleDeleteCategory(category._id)}
+                          onClick={() => handleConfirmDelete(category._id)}
                         >
                           Delete
                         </button>
@@ -214,6 +226,32 @@ const Categories = () => {
               <button
                 className="btn"
                 onClick={() => document.getElementById("edit_modal").close()}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </dialog>
+        {/* Delete confirmation modal */}
+        <dialog
+          id="delete_modal"
+          className="modal modal-bottom sm:modal-middle"
+        >
+          <div className="modal-box">
+            <h3 className="font-bold text-lg text-red-600">
+              Are you sure you want to delete this product?
+            </h3>
+            <div className="modal-action">
+              <button
+                className="btn btn-error"
+                onClick={handleDeleteCategory}
+                disabled={isDeletingCategory}
+              >
+                {isDeletingCategory ? "Deleting..." : "Delete"}
+              </button>
+              <button
+                className="btn"
+                onClick={() => document.getElementById("delete_modal").close()}
               >
                 Close
               </button>
