@@ -24,11 +24,34 @@ const Cart = () => {
   } = useGetProductsQuery({ addedToCart: true });
 
   const [updateProduct] = useUpdateProductMutation();
+  const [productIdToRemove, setProductIdToRemove] = useState<string | null>(
+    null
+  );
 
-  const handleRemoveFromCart = async (product: TProduct) => {
-    const updatedProduct = { ...product, addedToCart: false };
-    await updateProduct({ id: product._id, data: updatedProduct });
-    toast("Product removed from Cart!");
+  const handleConfirmRemove = (id: string) => {
+    setProductIdToRemove(id);
+    document.getElementById("delete_modal").showModal();
+  };
+
+  const handleRemoveFromCart = async () => {
+    if (productIdToRemove) {
+      try {
+        const productToRemove = productsData.data.find(
+          (product: TProduct) => product._id === productIdToRemove
+        );
+        const updatedProduct = { ...productToRemove, addedToCart: false };
+        await updateProduct({
+          id: productIdToRemove,
+          data: updatedProduct,
+        }).unwrap();
+        toast.success("Product removed from cart!");
+        setProductIdToRemove(null);
+      } catch (error) {
+        console.error("Failed to remove product from cart!", error);
+        toast.error("Failed to remove product from cart!");
+      }
+      document.getElementById("delete_modal").close();
+    }
   };
 
   // Calculate total items and total price
@@ -96,7 +119,7 @@ const Cart = () => {
                     <td>${product.price}</td>
                     <td className="text-center">
                       <button
-                        onClick={() => handleRemoveFromCart(product)}
+                        onClick={() => handleConfirmRemove(product._id)}
                         className="px-4 py-2 bg-red-600 text-white rounded"
                       >
                         Remove
@@ -109,6 +132,25 @@ const Cart = () => {
           </table>
         </div>
       </div>
+      {/* Delete confirmation modal */}
+      <dialog id="delete_modal" className="modal modal-bottom sm:modal-middle">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg text-red-600">
+            Are you sure you want to delete this product?
+          </h3>
+          <div className="modal-action">
+            <button className="btn btn-error" onClick={handleRemoveFromCart}>
+              Delete
+            </button>
+            <button
+              className="btn"
+              onClick={() => document.getElementById("delete_modal").close()}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </dialog>
     </>
   );
 };
