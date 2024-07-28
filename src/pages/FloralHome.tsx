@@ -1,6 +1,5 @@
 import Banner from "@/components/banner/Banner";
 import ProductContainer from "@/components/floralHome/ProductContainer";
-import MosaicViewImages from "@/components/mosaicViewImages/MosaicViewImages";
 import Shine from "@/components/shine/Shine";
 import { Helmet } from "react-helmet-async";
 

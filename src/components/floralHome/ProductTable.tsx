@@ -36,7 +36,10 @@ const ProductTable: FC<ProductCardProps> = ({
       <td>
         <div className="font-bold">{title}</div>
         <div>
-          <Link to={`/products/${_id}`} className="text-blue-500 hover:underline">
+          <Link
+            to={`/products/${_id}`}
+            className="text-blue-500 hover:underline"
+          >
             {_id}
           </Link>
         </div>

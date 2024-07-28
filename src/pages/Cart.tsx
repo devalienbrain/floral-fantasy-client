@@ -41,6 +41,7 @@ const Cart = () => {
 
   return (
     <>
+      <Toaster />
       <Helmet>
         <title>Floral Fantasy | My Cart</title>
       </Helmet>

@@ -6,7 +6,7 @@ import {
   useDeleteCategoryMutation,
 } from "@/redux/api/api";
 import { Helmet } from "react-helmet-async";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 interface CategoryCardProps {
   _id: string;
@@ -79,6 +79,7 @@ const Categories = () => {
 
   return (
     <>
+      <Toaster />
       <Helmet>
         <title>Floral Fantasy | Categories</title>
       </Helmet>

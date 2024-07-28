@@ -1,5 +1,7 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
+import { useUpdateProductMutation } from "@/redux/api/api";
+import toast from "react-hot-toast";
 
 interface ProductCardProps {
   _id: string;
@@ -11,14 +13,6 @@ interface ProductCardProps {
   rating: number;
   image: string;
 }
-const productAddedToCart = async () => {
-  try {
-    await updateProduct({ id: _id, data: { addedToCart: true } });
-    toast("Product added to cart successfully!");
-  } catch (error) {
-    console.error("Failed to update product", error);
-  }
-};
 
 const ProductCard: FC<ProductCardProps> = ({
   _id,
@@ -30,6 +24,15 @@ const ProductCard: FC<ProductCardProps> = ({
   rating,
   image,
 }) => {
+  const [updateProduct] = useUpdateProductMutation();
+  const productAddedToCart = async () => {
+    try {
+      await updateProduct({ id: _id, data: { addedToCart: true } });
+      toast("Product added to cart successfully!");
+    } catch (error) {
+      console.error("Failed to update product", error);
+    }
+  };
   return (
     <>
       <div className="card shadow-xl border">
@@ -50,7 +53,7 @@ const ProductCard: FC<ProductCardProps> = ({
               {_id}
             </Link>
           </div>
-          <p>If a dog chews shoes whose shoes does he choose?</p>
+          <p className="text-left">{description}</p>
           <div className="flex justify-between items-center">
             <Link to={`/products/${_id}`}>
               <button className="px-6 py-3 mt-4 border border-lime-500 hover:bg-lime-500 hover:text-white rounded-md transition duration-300">

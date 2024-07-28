@@ -9,7 +9,7 @@ import {
   useDeleteProductMutation,
 } from "@/redux/api/api";
 import { Helmet } from "react-helmet-async";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import ProductTable from "@/components/floralHome/ProductTable";
 
 type TProduct = {
@@ -40,6 +40,7 @@ const Products = () => {
   });
   const [page, setPage] = useState(1);
   const [limit] = useState(10);
+  const [productIdToDelete, setProductIdToDelete] = useState<string | null>(null);
 
   const {
     data: categoriesData,
@@ -71,8 +72,10 @@ const Products = () => {
         image: "",
       });
       document.getElementById("my_modal_6").close();
+      toast.success("Product added successfully!");
     } catch (error) {
       console.error("Failed to add product", error);
+      toast.error("Failed to add product!");
     }
   };
 
@@ -82,12 +85,22 @@ const Products = () => {
     document.getElementById("edit_modal").showModal();
   };
 
-  const handleDeleteProduct = async (id: string) => {
-    try {
-      await deleteProduct(id).unwrap();
-      toast("Product deleted!");
-    } catch (error) {
-      console.error("Failed to delete product", error);
+  const handleConfirmDelete = (id: string) => {
+    setProductIdToDelete(id);
+    document.getElementById("delete_modal").showModal();
+  };
+
+  const handleDeleteProduct = async () => {
+    if (productIdToDelete) {
+      try {
+        await deleteProduct(productIdToDelete).unwrap();
+        toast.success("Product deleted successfully!");
+        setProductIdToDelete(null);
+      } catch (error) {
+        console.error("Failed to delete product!", error);
+        toast.error("Failed to delete product!");
+      }
+      document.getElementById("delete_modal").close();
     }
   };
 
@@ -98,8 +111,10 @@ const Products = () => {
         await updateProduct({ id: _id, data: updateData }).unwrap();
         setEditingProduct(null);
         document.getElementById("edit_modal").close();
+        toast.success("Product updated successfully!");
       } catch (error) {
         console.error("Failed to update product", error);
+        toast.error("Failed to update product!");
       }
     }
   };
@@ -110,6 +125,7 @@ const Products = () => {
 
   return (
     <>
+      <Toaster />
       <Helmet>
         <title>Floral Fantasy | Products</title>
       </Helmet>
@@ -294,7 +310,7 @@ const Products = () => {
                     key={product._id}
                     {...product}
                     onEdit={handleEditProduct}
-                    onDelete={handleDeleteProduct}
+                    onDelete={handleConfirmDelete}
                   />
                 ))
               )}
@@ -444,6 +460,30 @@ const Products = () => {
         </div>
       </dialog>
       {/* Edit/ update modal Ends */}
+      {/* Delete modal Ends */}
+      <dialog id="delete_modal" className="modal modal-bottom sm:modal-middle">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg text-red-600">
+            Are you sure you want to delete this product?
+          </h3>
+          <div className="modal-action">
+            <button
+              className="btn btn-error"
+              onClick={handleDeleteProduct}
+              disabled={isDeletingProduct}
+            >
+              {isDeletingProduct ? "Deleting..." : "Delete"}
+            </button>
+            <button
+              className="btn"
+              onClick={() => document.getElementById("delete_modal").close()}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </dialog>
+      {/* Delete modal Ends */}
     </>
   );
 };
