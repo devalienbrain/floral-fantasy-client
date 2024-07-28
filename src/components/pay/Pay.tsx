@@ -1,11 +1,11 @@
 // import { Dialog, Transition } from "@headlessui/react";
+import { Dialog, Transition } from "@headlessui/react";
 import { Elements } from "@stripe/react-stripe-js";
 import { Fragment } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import PaymentForm from "./PaymentForm";
 
 const stripePromise = loadStripe(import.meta.env.VITE_PAYMENT_PK);
-// console.log(import.meta.env.VITE_PAYMENT_PK);
 
 export default function Pay({ data, isOpen, closeModal }) {
   return (

@@ -22,8 +22,8 @@ const Payment = () => {
       <Helmet>
         <title>Floral Fantasy | Payment</title>
       </Helmet>
-      <div className="min-h-screen flex justify-center items-center">
-        <div>
+      <div className="min-h-screen flex justify-center items-center bg-gradient-to-b from-black/90 via-black/80 to-black/90">
+        <div className="rounded-xl shadow-xl p-20 bg-white text-black">
           <div className="pb-5">
             <span className="underline text-green-500"> Payment</span>
           </div>
@@ -67,7 +67,7 @@ const Payment = () => {
               </div>
               <div className="form-control mt-6">
                 <button className="p-3 rounded-lg text-white bg-green-500 w-full font-bold">
-                  Pay  $
+                  Pay $
                 </button>
               </div>
             </form>
