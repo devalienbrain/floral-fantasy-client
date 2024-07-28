@@ -136,7 +136,7 @@ const Cart = () => {
       <dialog id="delete_modal" className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
           <h3 className="font-bold text-lg text-red-600">
-            Are you sure you want to delete this product?
+            Are you sure you want to remove this product from your cart?
           </h3>
           <div className="modal-action">
             <button className="btn btn-error" onClick={handleRemoveFromCart}>

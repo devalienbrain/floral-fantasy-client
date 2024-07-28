@@ -239,7 +239,7 @@ const Categories = () => {
         >
           <div className="modal-box">
             <h3 className="font-bold text-lg text-red-600">
-              Are you sure you want to delete this product?
+              Are you sure you want to delete this category?
             </h3>
             <div className="modal-action">
               <button
