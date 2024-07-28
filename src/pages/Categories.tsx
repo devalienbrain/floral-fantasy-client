@@ -83,13 +83,13 @@ const Categories = () => {
         <title>Floral Fantasy | Categories</title>
       </Helmet>
       <div className="p-10">
-        <h1 className="text-center py-10 text-6xl font-bold">
-          Categories Management
+        <h1 className="text-center py-10 text-6xl font-black">
+          <span className="text-red-500 font-black">Categories</span> Management
         </h1>
         <div className="mx-auto flex justify-center text-white pb-10">
           <div className="lg:tooltip" data-tip="Click to add a new category">
             <button
-              className="w-20 h-20 rounded-full text-3xl font-black text-black border"
+              className="w-20 h-20 rounded-full text-3xl font-black text-lime-600 border"
               onClick={() => document.getElementById("my_modal_5").showModal()}
             >
               +

@@ -10,7 +10,7 @@ const Layout = () => {
         <div className="bg-black/80 text-white">
           <Navbar />
         </div>
-        <div>
+        <div className="min-h-screen">
           <Outlet />
         </div>
         <div className="bg-black text-white">

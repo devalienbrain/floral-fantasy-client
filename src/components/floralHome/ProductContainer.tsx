@@ -60,7 +60,7 @@ const ProductContainer = () => {
       {/* Category Container and cards part Starts here*/}
       <div className="py-10">
         <hr />
-        <h1 className="text-center py-10 text-6xl font-bold">Categories</h1>
+        <h1 className="text-center py-10 text-6xl font-black text-lime-600">Categories</h1>
         <hr />
         {/* Category cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-5 pt-24">
@@ -80,7 +80,7 @@ const ProductContainer = () => {
       {/* Products container and card Starts here */}
       <div className="py-24">
         <hr />
-        <h1 className="text-center py-10 text-6xl font-bold">Products</h1>
+        <h1 className="text-center py-10 text-6xl font-black text-red-500">Products</h1>
         <hr />
         {/* Set page limit And Products search part */}
         <div className="py-5">
