@@ -82,7 +82,7 @@ const Categories = () => {
       <Helmet>
         <title>Floral Fantasy | Categories</title>
       </Helmet>
-      <div className="p-10">
+      <div className=" max-w-7xl mx-auto p-10">
         <h1 className="text-center py-10 text-6xl font-black">
           <span className="text-red-500 font-black">Categories</span> Management
         </h1>

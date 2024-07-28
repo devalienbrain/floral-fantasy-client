@@ -3,6 +3,7 @@ import { MdOutlineNavigateNext, MdOutlineNavigateBefore } from "react-icons/md";
 import { useGetCategoriesQuery, useGetProductsQuery } from "@/redux/api/api";
 import toast, { Toaster } from "react-hot-toast";
 import ProductCard from "../productsCard/ProductCard";
+import MosaicViewImages from "../mosaicViewImages/MosaicViewImages";
 
 type TProduct = {
   _id: string;
@@ -57,30 +58,12 @@ const ProductContainer = () => {
     <>
       <Toaster />
 
-      {/* Category Container and cards part Starts here*/}
-      <div className="py-10">
-        <hr />
-        <h1 className="text-center py-10 text-6xl font-black text-lime-600">Categories</h1>
-        <hr />
-        {/* Category cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-5 pt-24">
-          {categories?.data?.map((category: CategoryCardProps, index) => (
-            <div key={index} className="bg-black/5 shadow-md px-10 rounded-xl">
-              <div className="p-4">
-                <p className="text-lime-600 text-xl font-black">
-                  {category.name}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-      {/* Category Container and cards part Ends here */}
-
       {/* Products container and card Starts here */}
-      <div className="py-24">
+      <div className="py-24 max-w-7xl mx-auto px-10">
         <hr />
-        <h1 className="text-center py-10 text-6xl font-black text-red-500">Products</h1>
+        <h1 className="text-center py-10 text-6xl font-black text-red-500">
+          Products
+        </h1>
         <hr />
         {/* Set page limit And Products search part */}
         <div className="py-5">
@@ -172,6 +155,32 @@ const ProductContainer = () => {
         </div>
       </div>
       {/* Products container and card Ends here */}
+      <div className="bg-black p-5">
+        <div className="max-w-7xl mx-auto px-10">
+          <MosaicViewImages />
+        </div>
+      </div>
+      {/* Category Container and cards part Starts here*/}
+      <div className="py-10 max-w-7xl mx-auto px-10">
+        <hr />
+        <h1 className="text-center py-10 text-6xl font-black text-lime-600">
+          Categories
+        </h1>
+        <hr />
+        {/* Category cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-5 pt-24">
+          {categories?.data?.map((category: CategoryCardProps, index) => (
+            <div key={index} className="bg-black/5 shadow-md px-10 rounded-xl">
+              <div className="p-4">
+                <p className="text-red-600 text-xl font-black">
+                  {category.name}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      {/* Category Container and cards part Ends here */}
     </>
   );
 };

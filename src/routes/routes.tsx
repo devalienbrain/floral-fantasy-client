@@ -6,11 +6,14 @@ import Products from "@/pages/Products";
 import Cart from "@/pages/Cart";
 import Categories from "@/pages/Categories";
 import Payment from "@/pages/Payment";
+import ErrorPage from "@/pages/ErrorPage/ErrorPage";
+import LinksPage from "@/components/footer/linksPage/LinksPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
@@ -37,6 +40,10 @@ const router = createBrowserRouter([
         element: <Payment />,
       },
     ],
+  },
+  {
+    path: "linksPage",
+    element: <LinksPage />,
   },
 ]);
 export default router;

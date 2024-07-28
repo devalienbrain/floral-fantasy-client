@@ -10,29 +10,35 @@ const Navbar = () => {
   const totalItems = cartProducts.length;
   return (
     <>
-      <div className="flex flex-col md:flex-row justify-center md:justify-between items-center p-7">
-        <Link to="/">
-          <div className="flex justify-start items-center gap-3">
-            <img className="w-10" src={logoIcon} />
-            <span className="text-2xl font-black">
-              Floral{" "}
-              <span className="text-lime-500 text-2xl font-black">Fantasy</span>
-            </span>
+      <div className="max-w-7xl mx-auto px-10 flex flex-col md:flex-row gap-10 justify-center md:justify-between items-center py-5">
+        <div className="flex-1 md:w-1/2">
+          <Link to="/">
+            <div className="flex justify-start items-center gap-3">
+              <img className="w-10" src={logoIcon} />
+              <span className="text-2xl font-black">
+                Floral{" "}
+                <span className="text-lime-500 text-2xl font-black">
+                  Fantasy
+                </span>
+              </span>
+            </div>
+          </Link>
+        </div>
+        <div className="w-full md:w-1/2 justify-between md:justify-end flex items-center gap-5 pr-3">
+          <div className="flex gap-2">
+            <Link to="categories">
+              <span className="hover:text-lime-600">Categories</span>
+            </Link>
+            <Link to="products">
+              <span className="hover:text-lime-600">Products</span>
+            </Link>
           </div>
-        </Link>
-        <div className="justify-end flex items-center gap-5 pr-3">
-          <Link to="categories">
-            <span className="hover:text-lime-600">Categories</span>
-          </Link>
-          <Link to="products">
-            <span className="hover:text-lime-600">Products</span>
-          </Link>
           <Link to="cart">
             <div className="relative">
               <span>
                 <FaCartPlus className="text-3xl font-black" />
               </span>
-              <div className="w-6 h-6 border border-lime-200 bg-lime-300 rounded-full absolute -top-5 -right-5 text-lime-950 flex justify-center items-center font-bold text-lg z-10">
+              <div className="w-5 h-5 border border-lime-200 bg-lime-300 rounded-full absolute -top-5 -right-5 text-lime-950 flex justify-center items-center font-semibold text-sm z-10">
                 {totalItems}
               </div>
             </div>

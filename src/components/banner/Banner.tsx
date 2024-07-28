@@ -14,7 +14,7 @@ const Banner = () => {
         className="relative w-full h-screen bg-cover bg-center flex items-center justify-center opacity-75"
         style={{ backgroundImage: `url(${bannerImg})` }}
       >
-        <div className="text-center bg-gradient-to-r from-cyan-800 via-red-600 to-lime-700 bg-clip-text text-transparent">
+        <div className="max-w-7xl mx-auto px-10 text-center bg-gradient-to-r from-cyan-800 via-red-600 to-lime-700 bg-clip-text text-transparent">
           <h3 className="text-2xl font-semibold md:text-3xl mb-2">
             Welcome to
           </h3>

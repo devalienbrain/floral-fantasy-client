@@ -44,7 +44,7 @@ const Cart = () => {
       <Helmet>
         <title>Floral Fantasy | My Cart</title>
       </Helmet>
-      <div className="p-10 text-black">
+      <div className=" max-w-7xl mx-auto p-10 text-black">
         <Toaster />
         <h1 className="text-center py-10 text-6xl font-black text-red-600">
           My Cart

@@ -114,7 +114,7 @@ const Products = () => {
         <title>Floral Fantasy | Products</title>
       </Helmet>
 
-      <div className="p-10">
+      <div className=" max-w-7xl mx-auto p-10">
         <h1 className="text-center py-10 text-6xl font-black">
           <span className="text-red-500 font-black">Products</span> Management
         </h1>

@@ -48,12 +48,12 @@ const ProductDetails: FC<ProductDetailsProps> = () => {
       <Helmet>
         <title>Floral Fantasy | Product Details</title>
       </Helmet>
-      <div className="p-10 border rounded-lg shadow-md">
+      <div className=" max-w-7xl mx-auto p-10 border rounded-lg shadow-md">
         <Toaster />
         <img
           src={image}
           alt={title}
-          className="w-full h-full object-contain rounded-lg mb-4"
+          className="w-full h-full object-contain rounded-lg mb-4 p-5 border"
         />
         <h2 className="text-xl font-semibold">{title}</h2>
         <p className="text-gray-700">{description}</p>
