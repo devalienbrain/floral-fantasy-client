@@ -475,7 +475,7 @@ const Products = () => {
               {isDeletingProduct ? "Deleting..." : "Delete"}
             </button>
             <button
-              className="btn"
+              className="btn btn-primary"
               onClick={() => document.getElementById("delete_modal").close()}
             >
               Close

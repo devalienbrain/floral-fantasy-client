@@ -196,7 +196,7 @@ const Categories = () => {
 
         {/* Edit Category Modal */}
         <dialog id="edit_modal" className="modal modal-bottom sm:modal-middle">
-          <div className="modal-box">
+          <div className="modal-box text-white">
             <h3 className="font-bold text-lg">Edit category</h3>
             {editingCategory && (
               <div className="py-4">
@@ -250,7 +250,7 @@ const Categories = () => {
                 {isDeletingCategory ? "Deleting..." : "Delete"}
               </button>
               <button
-                className="btn"
+                className="btn btn-primary"
                 onClick={() => document.getElementById("delete_modal").close()}
               >
                 Close

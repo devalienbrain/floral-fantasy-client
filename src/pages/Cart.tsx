@@ -64,7 +64,7 @@ const Cart = () => {
   );
 
   const handleCheckout = () => {
-    navigate('/payment', { state: { totalPrice } });
+    navigate("/payment", { state: { totalPrice } });
   };
 
   return (
@@ -149,7 +149,7 @@ const Cart = () => {
               Delete
             </button>
             <button
-              className="btn"
+              className="btn btn-primary"
               onClick={() => document.getElementById("delete_modal").close()}
             >
               Close
