@@ -2,21 +2,29 @@ import Pay from "@/components/pay/Pay";
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { FaQuestionCircle } from "react-icons/fa";
+import { useLocation } from "react-router-dom";
 
 const Payment = () => {
+  const location = useLocation();
+  const { totalPrice } = location.state || { totalPrice: 0 };
+
   const [isOpen, setIsOpen] = useState(false);
-  const [amount, setAmount] = useState(10);
   const [name, setName] = useState("");
+
   const closeModal = () => setIsOpen(false);
   const openModal = () => setIsOpen(true);
-  const handlesubmit = (e) => {
+
+  const handleSubmit = (e) => {
     e.preventDefault();
     openModal();
   };
-  const changename = (e) => {
+
+  const handleChangeName = (e) => {
     setName(e.target.value);
   };
-  const data = { name, amount };
+
+  const data = { name, amount: totalPrice };
+
   return (
     <>
       <Helmet>
@@ -35,13 +43,13 @@ const Payment = () => {
             </h1>
             {/* FORM STARTS */}
             <form
-              onSubmit={handlesubmit}
+              onSubmit={handleSubmit}
               className="card-body text-black flex-1"
             >
               <div className="form-control">
                 <input
                   required
-                  onChange={changename}
+                  onChange={handleChangeName}
                   type="text"
                   name="name"
                   placeholder="Your Name"
@@ -51,7 +59,7 @@ const Payment = () => {
               <div>
                 <input
                   type="text"
-                  name="text"
+                  name="address"
                   placeholder="Your Address"
                   className="input mt-2 input-bordered w-full"
                 />
@@ -59,7 +67,7 @@ const Payment = () => {
               <div className="form-control">
                 <input
                   required
-                  defaultValue={30}
+                  value={totalPrice}
                   type="number"
                   name="amount"
                   placeholder="Amount to Pay"
@@ -68,13 +76,11 @@ const Payment = () => {
                 />
               </div>
 
-
               <div className="form-control mt-6">
                 <button className="p-3 rounded-lg text-white bg-green-500 w-full font-bold">
-                  Pay $
+                  Pay ${totalPrice}
                 </button>
               </div>
-
             </form>
             {/* FORM ENDS */}
           </div>

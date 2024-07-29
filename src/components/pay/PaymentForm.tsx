@@ -1,12 +1,9 @@
 /* eslint-disable react/prop-types */
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
 import { useEffect, useState } from 'react'
-import './form.css'
-import { ImSpinner9 } from 'react-icons/im'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
-// import axios from 'axios' // Ensure axios or axiosSecure is imported
-// import { UserContext } from '../context/UserContext' // Replace with your actual context
+import { useCreatePaymentIntentMutation, useSavePaymentInfoMutation } from '@/redux/api/api'
 
 const PaymentForm = ({ data, closeModal }) => {
   const stripe = useStripe()
@@ -15,25 +12,28 @@ const PaymentForm = ({ data, closeModal }) => {
   const [clientSecret, setClientSecret] = useState('')
   const [processing, setProcessing] = useState(false)
   const navigate = useNavigate()
-  // const { user } = useContext(UserContext) // Replace with your actual context
+
+  // Assuming you have these mutations in your api.ts
+  const [createPaymentIntent] = useCreatePaymentIntentMutation()
+  const [savePaymentInfo] = useSavePaymentInfoMutation()
 
   const price = Number(data.amount)
 
   // Create Payment Intent
   useEffect(() => {
-    const createPaymentIntent = async () => {
+    const fetchClientSecret = async () => {
       try {
-        const response = await axios.post("/paymentIntent", { price })
-        setClientSecret(response.data.clientSecret)
+        const response = await createPaymentIntent({ amount: price }).unwrap()
+        setClientSecret(response.clientSecret)
       } catch (error) {
         console.error('Error creating payment intent:', error)
         toast.error('Failed to create payment intent')
       }
     }
     if (price) {
-      createPaymentIntent()
+      fetchClientSecret()
     }
-  }, [price])
+  }, [price, createPaymentIntent])
 
   const handleSubmit = async event => {
     event.preventDefault()
@@ -66,8 +66,8 @@ const PaymentForm = ({ data, closeModal }) => {
         payment_method: {
           card,
           billing_details: {
-            email: user?.email,
-            name: user?.displayName,
+            email: data.email, // Adjust based on available data
+            name: data.name, // Adjust based on available data
           },
         },
       })
@@ -80,9 +80,9 @@ const PaymentForm = ({ data, closeModal }) => {
 
       if (paymentIntent.status === 'succeeded') {
         const info = {
-          Email: user?.email,
-          Name: user?.displayName,
-          PaymentName: data.name,
+          email: data.email, // Adjust based on available data
+          name: data.name, // Adjust based on available data
+          paymentName: data.name,
           amount: data.amount,
           transactionId: paymentIntent.id,
           date: new Date(),
@@ -90,8 +90,8 @@ const PaymentForm = ({ data, closeModal }) => {
         console.log(info)
 
         try {
-          const saveInfoResponse = await axios.post("/saveInfo", info)
-          if (saveInfoResponse.data._id) {
+          const saveInfoResponse = await savePaymentInfo(info).unwrap()
+          if (saveInfoResponse._id) {
             setProcessing(false)
             navigate('/')
             toast.success("Your payment was successful!")

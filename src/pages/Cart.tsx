@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useGetProductsQuery, useUpdateProductMutation } from "@/redux/api/api";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { Helmet } from "react-helmet-async";
 
@@ -17,6 +17,7 @@ type TProduct = {
 };
 
 const Cart = () => {
+  const navigate = useNavigate();
   const {
     data: productsData,
     isLoading: isProductsLoading,
@@ -62,6 +63,10 @@ const Cart = () => {
     0
   );
 
+  const handleCheckout = () => {
+    navigate('/payment', { state: { totalPrice } });
+  };
+
   return (
     <>
       <Toaster />
@@ -80,11 +85,12 @@ const Cart = () => {
             <div className="font-bold text-xl text-lime-600">
               Total Price = ${totalPrice.toFixed(2)}
             </div>
-            <Link to="/payment">
-              <button className="px-6 py-3 hover:bg-white hover:text-black bg-lime-800 text-white shadow-xl rounded-md transition duration-300">
-                Checkout
-              </button>
-            </Link>
+            <button
+              onClick={handleCheckout}
+              className="px-6 py-3 hover:bg-white hover:text-black bg-lime-800 text-white shadow-xl rounded-md transition duration-300"
+            >
+              Checkout
+            </button>
           </div>
         </div>
         <hr />

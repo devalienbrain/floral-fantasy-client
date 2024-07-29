@@ -1,4 +1,4 @@
-// import { Dialog, Transition } from "@headlessui/react";
+// Pay.js
 import { Dialog, Transition } from "@headlessui/react";
 import { Elements } from "@stripe/react-stripe-js";
 import { Fragment } from "react";

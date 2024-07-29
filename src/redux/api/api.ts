@@ -82,6 +82,22 @@ export const baseApi = createApi({
       }),
       invalidatesTags: ["Category"],
     }),
+
+    // Payment-related endpoints
+    createPaymentIntent: builder.mutation({
+      query: (data) => ({
+        url: "/create-payment-intent",
+        method: "POST",
+        body: data,
+      }),
+    }),
+    savePaymentInfo: builder.mutation({
+      query: (data) => ({
+        url: "/save-payment-info",
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -89,11 +105,12 @@ export const {
   useGetProductsQuery,
   useGetProductByIdQuery,
   useAddProductMutation,
-
   useUpdateProductMutation,
   useDeleteProductMutation,
   useGetCategoriesQuery,
   useAddCategoryMutation,
   useUpdateCategoryMutation,
   useDeleteCategoryMutation,
+  useCreatePaymentIntentMutation,
+  useSavePaymentInfoMutation,
 } = baseApi;

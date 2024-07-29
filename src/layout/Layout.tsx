@@ -7,7 +7,7 @@ const Layout = () => {
   return (
     <>
       <Container>
-        <div className="bg-black/80 text-white">
+        <div className="bg-lime-900 text-white">
           <Navbar />
         </div>
         <div className="min-h-screen">
