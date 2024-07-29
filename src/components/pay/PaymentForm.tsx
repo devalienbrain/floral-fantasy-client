@@ -1,11 +1,12 @@
 /* eslint-disable react/prop-types */
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import './form.css'
 import { ImSpinner9 } from 'react-icons/im'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
-
+// import axios from 'axios' // Ensure axios or axiosSecure is imported
+// import { UserContext } from '../context/UserContext' // Replace with your actual context
 
 const PaymentForm = ({ data, closeModal }) => {
   const stripe = useStripe()
@@ -14,18 +15,25 @@ const PaymentForm = ({ data, closeModal }) => {
   const [clientSecret, setClientSecret] = useState('')
   const [processing, setProcessing] = useState(false)
   const navigate = useNavigate()
+  // const { user } = useContext(UserContext) // Replace with your actual context
+
   const price = Number(data.amount)
-  console.log(price);
-  // console.log('100');
-  // console.log(100);
 
   // Create Payment Intent
-//   useEffect(()=>{
-//     axiosSecure.post("/paymentIntent", {price}).then((res) => {
-//       console.log(res.data);
-//       setClientSecret(res.data)
-//     });
-//   },[price])
+  useEffect(() => {
+    const createPaymentIntent = async () => {
+      try {
+        const response = await axios.post("/paymentIntent", { price })
+        setClientSecret(response.data.clientSecret)
+      } catch (error) {
+        console.error('Error creating payment intent:', error)
+        toast.error('Failed to create payment intent')
+      }
+    }
+    if (price) {
+      createPaymentIntent()
+    }
+  }, [price])
 
   const handleSubmit = async event => {
     event.preventDefault()
@@ -39,25 +47,24 @@ const PaymentForm = ({ data, closeModal }) => {
       return
     }
 
-    const { paymentMethod, error } = await stripe.createPaymentMethod({
+    const { error: paymentMethodError, paymentMethod } = await stripe.createPaymentMethod({
       type: 'card',
       card,
     })
 
-    if (error) {
-      console.log('error', error)
-      setCardError(error.message)
+    if (paymentMethodError) {
+      setCardError(paymentMethodError.message)
+      return
     } else {
       setCardError('')
-      console.log('payment method', paymentMethod)
     }
 
     setProcessing(true)
-    console.log(clientSecret);
-    const { paymentIntent, error: confirmError } =
-      await stripe.confirmCardPayment(clientSecret,{
+
+    try {
+      const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
-          card: card,
+          card,
           billing_details: {
             email: user?.email,
             name: user?.displayName,
@@ -65,33 +72,39 @@ const PaymentForm = ({ data, closeModal }) => {
         },
       })
 
-    if (confirmError) {
-      console.log(confirmError)
-      setCardError(confirmError.message)
-    }
-    console.log('payment intent', paymentIntent)
+      if (confirmError) {
+        setCardError(confirmError.message)
+        setProcessing(false)
+        return
+      }
 
-    if (paymentIntent.status === 'succeeded') {
-      // save payment information to the server
-      // Update room status in db
-      const info = {
+      if (paymentIntent.status === 'succeeded') {
+        const info = {
           Email: user?.email,
           Name: user?.displayName,
           PaymentName: data.name,
-          amount:data.amount,
+          amount: data.amount,
           transactionId: paymentIntent.id,
           date: new Date(),
         }
-        console.log(info);
-        // axiosSecure.post("/saveInfo",info).then((res) => {
-        //   console.log(res.data);
-        //   if(res.data._id){
-        //     setProcessing(false)
-        //     navigate('/')
-        //     toast.success("You donation Successfuly");
-        //   }
-        // });
+        console.log(info)
 
+        try {
+          const saveInfoResponse = await axios.post("/saveInfo", info)
+          if (saveInfoResponse.data._id) {
+            setProcessing(false)
+            navigate('/')
+            toast.success("Your payment was successful!")
+          }
+        } catch (saveInfoError) {
+          console.error('Error saving payment info:', saveInfoError)
+          toast.error('Failed to save payment info')
+          setProcessing(false)
+        }
+      }
+    } catch (confirmError) {
+      setCardError(confirmError.message)
+      setProcessing(false)
     }
   }
 

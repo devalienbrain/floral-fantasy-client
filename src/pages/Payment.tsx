@@ -48,28 +48,33 @@ const Payment = () => {
                   className="input input-bordered w-full"
                 />
               </div>
+              <div>
+                <input
+                  type="text"
+                  name="text"
+                  placeholder="Your Address"
+                  className="input mt-2 input-bordered w-full"
+                />
+              </div>
               <div className="form-control">
                 <input
                   required
                   defaultValue={30}
                   type="number"
                   name="amount"
-                  placeholder="Amount"
+                  placeholder="Amount to Pay"
                   className="input input-bordered w-full"
                   disabled
                 />
-                <input
-                  type="text"
-                  name="text"
-                  placeholder="Say Something Good About Us"
-                  className="input mt-2 input-bordered w-full"
-                />
               </div>
+
+
               <div className="form-control mt-6">
                 <button className="p-3 rounded-lg text-white bg-green-500 w-full font-bold">
                   Pay $
                 </button>
               </div>
+
             </form>
             {/* FORM ENDS */}
           </div>

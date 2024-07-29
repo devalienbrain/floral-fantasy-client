@@ -12,10 +12,7 @@ const MosaicViewImages = () => {
   return (
     <>
       <div className="bg-black rounded-xl p-5 grid grid-cols-1 md:grid-cols-3 gap-3 py-10 shadow-md">
-        <img src={image1} className="rounded-xl" alt="Nursery Plant" />
-        <img src={image9} className="rounded-xl" alt="Nursery Plant" />
 
-        <img src={image7} className="rounded-xl" alt="Nursery Plant" />
         <img src={image8} className="rounded-xl" alt="Nursery Plant" />
         <img src={image6} className="rounded-xl" alt="Nursery Plant" />
         <img src={image2} className="rounded-xl" alt="Nursery Plant" />
@@ -23,6 +20,11 @@ const MosaicViewImages = () => {
         <img src={image4} className="rounded-xl" alt="Nursery Plant" />
         <img src={image5} className="rounded-xl" alt="Nursery Plant" />
         <img src={image3} className="rounded-xl" alt="Nursery Plant" />
+
+        <img src={image9} className="rounded-xl" alt="Nursery Plant" />
+        <img src={image1} className="rounded-xl" alt="Nursery Plant" />
+        <img src={image7} className="rounded-xl" alt="Nursery Plant" />
+
       </div>
     </>
   );
