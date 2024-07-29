@@ -8,6 +8,7 @@ import Categories from "@/pages/Categories";
 import Payment from "@/pages/Payment";
 import ErrorPage from "@/pages/ErrorPage/ErrorPage";
 import LinksPage from "@/components/footer/linksPage/LinksPage";
+import PaymentHistory from "@/components/paymentHistory/PaymentHistory";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: "/payment",
         element: <Payment />,
+      },
+      {
+        path: "/paymentHistory",
+        element: <PaymentHistory />,
       },
     ],
   },

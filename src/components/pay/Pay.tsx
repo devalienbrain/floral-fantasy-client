@@ -1,4 +1,3 @@
-// Pay.js
 import {
   Dialog,
   DialogPanel,
@@ -13,7 +12,7 @@ import PaymentForm from "./PaymentForm";
 
 const stripePromise = loadStripe(import.meta.env.VITE_PAYMENT_PK);
 
-export default function Pay({ data, isOpen, closeModal }) {
+const Pay = ({ data, isOpen, closeModal }) => {
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -65,3 +64,5 @@ export default function Pay({ data, isOpen, closeModal }) {
     </>
   );
 }
+
+export default Pay;

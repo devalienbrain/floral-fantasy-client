@@ -3,8 +3,9 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000" }),
-  tagTypes: ["Product", "Category"],
+  tagTypes: ["Product", "Category", "Payment"],
   endpoints: (builder) => ({
+    // Products
     getProducts: builder.query({
       query: ({
         category,
@@ -55,6 +56,8 @@ export const baseApi = createApi({
       }),
       invalidatesTags: ["Product"],
     }),
+
+    // Categories
     getCategories: builder.query({
       query: () => ({ url: "/categories" }),
       providesTags: ["Category"],
@@ -98,6 +101,10 @@ export const baseApi = createApi({
         body: data,
       }),
     }),
+    getUsersWhoPaid: builder.query({
+      query: () => ({ url: "/users-who-paid" }),
+      providesTags: ["Payment"],
+    }),
   }),
 });
 
@@ -113,4 +120,5 @@ export const {
   useDeleteCategoryMutation,
   useCreatePaymentIntentMutation,
   useSavePaymentInfoMutation,
+  useGetUsersWhoPaidQuery,
 } = baseApi;

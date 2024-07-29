@@ -2,7 +2,7 @@ import Pay from "@/components/pay/Pay";
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { FaQuestionCircle } from "react-icons/fa";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Payment = () => {
   const location = useLocation();
@@ -33,7 +33,18 @@ const Payment = () => {
       <div className="min-h-screen flex justify-center items-center bg-gradient-to-b from-black/90 via-black/80 to-black/90">
         <div className="rounded-xl shadow-xl p-20 bg-white text-black">
           <div className="pb-5">
-            <span className="underline text-green-500"> Payment</span>
+            <span className=" text-green-500 text-lg fontbold">
+              {" "}
+              Payment
+            </span>
+          </div>
+          <div className="pb-5">
+            <Link to='/paymentHistory'>
+              <span className="underline text-red-600 font-semibold">
+                {" "}
+                Payment history
+              </span>
+            </Link>
           </div>
           <hr />
           <div className="flex flex-col flex-1 pt-3">
