@@ -1,6 +1,8 @@
 #"Fatiha's-Floral-Fantasy"
 #Online Nursery Website 🌱
 
+Live deploy (Netlify) link:
+
 # React + TypeScript + Vite + Tailwind + ShadcnUI + Redux
 Basic Installion Setup
 
@@ -32,5 +34,16 @@ export default {
 - Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
 - Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
 - Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+
+### Environment variable setup
+
+1. Generate your stripe public key.
+2. In the root of the project folder, create a .env file.
+3. In the .env file, add the necessary environment variables. For example:
+
+   ```sh
+   VITE_PAYMENT_PK = <public key>  
+
+   ```
 
 Server side code link:  https://github.com/devalienbrain/floral-fantasy-server
