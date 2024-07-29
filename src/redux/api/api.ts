@@ -105,6 +105,13 @@ export const baseApi = createApi({
       query: () => ({ url: "/users-who-paid" }),
       providesTags: ["Payment"],
     }),
+    clearCart: builder.mutation({
+      query: () => ({
+        url: "/clear-cart",
+        method: "POST",
+      }),
+      invalidatesTags: ["Product"], 
+    }),
   }),
 });
 
@@ -121,4 +128,5 @@ export const {
   useCreatePaymentIntentMutation,
   useSavePaymentInfoMutation,
   useGetUsersWhoPaidQuery,
+  useClearCartMutation,
 } = baseApi;

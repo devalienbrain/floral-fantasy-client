@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import {
   useCreatePaymentIntentMutation,
   useSavePaymentInfoMutation,
+  useClearCartMutation, // Ensure you have this mutation defined
 } from "@/redux/api/api";
 import { ImSpinner9 } from "react-icons/im";
 
@@ -18,6 +19,7 @@ const PaymentForm = ({ data, closeModal }) => {
 
   const [createPaymentIntent] = useCreatePaymentIntentMutation();
   const [savePaymentInfo] = useSavePaymentInfoMutation();
+  const [clearCart] = useClearCartMutation(); // Use this mutation to clear the cart
 
   const price = Number(data.amount);
 
@@ -25,7 +27,6 @@ const PaymentForm = ({ data, closeModal }) => {
     const fetchClientSecret = async () => {
       try {
         const response = await createPaymentIntent({ amount: price }).unwrap();
-        console.log(response);
         setClientSecret(response.clientSecret);
       } catch (error) {
         console.error("Error creating payment intent:", error);
@@ -49,11 +50,10 @@ const PaymentForm = ({ data, closeModal }) => {
       return;
     }
 
-    const { error: paymentMethodError, paymentMethod } =
-      await stripe.createPaymentMethod({
-        type: "card",
-        card,
-      });
+    const { error: paymentMethodError } = await stripe.createPaymentMethod({
+      type: "card",
+      card,
+    });
 
     if (paymentMethodError) {
       setCardError(paymentMethodError.message);
@@ -91,14 +91,15 @@ const PaymentForm = ({ data, closeModal }) => {
           transactionId: paymentIntent.id,
           date: new Date(),
         };
-        console.log(info);
+
         try {
           const saveInfoResponse = await savePaymentInfo(info).unwrap();
-          console.log(saveInfoResponse);
           if (saveInfoResponse.insertedId) {
+            // Clear all cart items
+            await clearCart().unwrap(); // Clear cart without userId
             setProcessing(false);
             navigate("/");
-            toast.success("Your payment was successful!");
+            toast.success("Your payment was successful and cart cleared!");
           }
         } catch (saveInfoError) {
           console.error("Error saving payment info:", saveInfoError);
