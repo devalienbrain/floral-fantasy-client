@@ -21,22 +21,23 @@ const PaymentForm = ({ data, closeModal }) => {
   const [savePaymentInfo] = useSavePaymentInfoMutation();
   const [clearCart] = useClearCartMutation(); // Use this mutation to clear the cart
 
-  const price = Number(data.amount);
+  // Convert the price to an integer amount in cents
+  const priceInCents = Math.round(data.amount * 100);
 
   useEffect(() => {
     const fetchClientSecret = async () => {
       try {
-        const response = await createPaymentIntent({ amount: price }).unwrap();
+        const response = await createPaymentIntent({ amount: priceInCents }).unwrap();
         setClientSecret(response.clientSecret);
       } catch (error) {
         console.error("Error creating payment intent:", error);
         toast.error("Failed to create payment intent");
       }
     };
-    if (price) {
+    if (priceInCents) {
       fetchClientSecret();
     }
-  }, [price, createPaymentIntent]);
+  }, [priceInCents, createPaymentIntent]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();

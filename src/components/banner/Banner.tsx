@@ -11,7 +11,7 @@ const Banner = () => {
   return (
     <>
       <div
-        className="relative w-full h-screen bg-cover bg-center flex items-center justify-center opacity-70 bg-lime-900"
+        className="relative w-full h-screen bg-cover bg-center flex items-center justify-center opacity-70 bg-black"
         style={{ backgroundImage: `url(${bannerImg})` }}
       >
         <div className="max-w-7xl mx-auto px-10 text-center bg-gradient-to-r from-cyan-800 via-red-600 to-lime-700 bg-clip-text text-transparent">
