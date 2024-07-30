@@ -29,12 +29,15 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="w-full md:w-1/2 justify-between md:justify-end flex items-center gap-5 pr-3">
-          <div className="flex gap-2">
+          <div className="flex gap-2 md:gap-4">
             <Link to="categories">
               <span className="hover:text-lime-600">Categories</span>
             </Link>
             <Link to="products">
               <span className="hover:text-lime-600">Products</span>
+            </Link>
+            <Link to="paymentHistory">
+              <span className="hover:text-lime-600">Transactions</span>
             </Link>
           </div>
           <Link to="cart">
