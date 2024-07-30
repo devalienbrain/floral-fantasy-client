@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useGetProductsQuery, useUpdateProductMutation } from "@/redux/api/api";
 import { Link, useNavigate } from "react-router-dom";
@@ -14,6 +15,7 @@ type TProduct = {
   rating: number;
   image: string;
   addedToCart: boolean;
+  cartQuantity: number;
 };
 
 const Cart = () => {
@@ -40,7 +42,7 @@ const Cart = () => {
         const productToRemove = productsData.data.find(
           (product: TProduct) => product._id === productIdToRemove
         );
-        const updatedProduct = { ...productToRemove, addedToCart: false };
+        const updatedProduct = { ...productToRemove, addedToCart: false, cartQuantity: 0 };
         await updateProduct({
           id: productIdToRemove,
           data: updatedProduct,
@@ -57,9 +59,12 @@ const Cart = () => {
 
   // Calculate total items and total price
   const cartProducts = productsData?.data || [];
-  const totalItems = cartProducts.length;
+  const totalItems = cartProducts.reduce(
+    (sum, product) => sum + product.cartQuantity,
+    0
+  );
   const totalPrice = cartProducts.reduce(
-    (sum, product) => sum + product.price,
+    (sum, product) => sum + product.price * product.cartQuantity,
     0
   );
 
@@ -73,7 +78,7 @@ const Cart = () => {
       <Helmet>
         <title>Floral Fantasy | My Cart</title>
       </Helmet>
-      <div className=" max-w-7xl mx-auto p-10 text-black">
+      <div className="max-w-7xl mx-auto p-10 text-black">
         <Toaster />
         <h1 className="text-center py-10 text-6xl font-black text-red-600">
           My Cart
@@ -105,6 +110,8 @@ const Cart = () => {
                 <th className="text-left">Category</th>
                 <th className="text-left">Image</th>
                 <th className="text-left font-bold">Price</th>
+                <th className="text-left font-bold">Quantity</th>
+                <th className="text-left font-bold">Total</th>
                 <th className="text-center">Actions</th>
               </tr>
             </thead>
@@ -122,11 +129,13 @@ const Cart = () => {
                     <td>
                       <img src={product.image} alt={product.title} width="50" />
                     </td>
-                    <td>${product.price}</td>
-                    <td className="text-center">
+                    <td>${product.price.toFixed(2)}</td>
+                    <td>{product.cartQuantity}</td>
+                    <td>${(product.price * product.cartQuantity).toFixed(2)}</td>
+                    <td className="flex justify-center">
                       <button
                         onClick={() => handleConfirmRemove(product._id)}
-                        className="px-4 py-2 bg-red-600 text-white rounded"
+                        className="px-6 py-3 bg-red-600 hover:bg-red-500 text-white rounded-md transition duration-300"
                       >
                         Remove
                       </button>
@@ -138,24 +147,21 @@ const Cart = () => {
           </table>
         </div>
       </div>
-      {/* Delete confirmation modal */}
-      <dialog id="delete_modal" className="modal modal-bottom sm:modal-middle">
-        <div className="modal-box">
-          <h3 className="font-bold text-lg text-red-600">
+
+      {/* Delete Modal */}
+      <dialog id="delete_modal" className="modal">
+        <form method="dialog" className="modal-box bg-white">
+          <h3 className="font-bold text-lg">Remove From Cart?</h3>
+          <p className="py-4">
             Are you sure you want to remove this product from your cart?
-          </h3>
+          </p>
           <div className="modal-action">
-            <button className="btn btn-error" onClick={handleRemoveFromCart}>
-              Delete
-            </button>
-            <button
-              className="btn btn-primary"
-              onClick={() => document.getElementById("delete_modal").close()}
-            >
-              Close
+            <button className="btn">Cancel</button>
+            <button className="btn btn-primary" onClick={handleRemoveFromCart}>
+              Confirm
             </button>
           </div>
-        </div>
+        </form>
       </dialog>
     </>
   );

@@ -1,13 +1,17 @@
+
+
 import { FaCartPlus } from "react-icons/fa6";
 import logoIcon from "../../../public/assets/flowerLogo.png";
 import { Link } from "react-router-dom";
 import { useGetProductsQuery } from "@/redux/api/api";
+
 const Navbar = () => {
   const { data: productsData } = useGetProductsQuery({ addedToCart: true });
 
-  // Calculate total items and total price
+  // Calculate total quantity
   const cartProducts = productsData?.data || [];
-  const totalItems = cartProducts.length;
+  const totalQuantity = cartProducts.reduce((sum, product) => sum + product.cartQuantity, 0);
+
   return (
     <>
       <div className="max-w-7xl mx-auto px-10 flex flex-col md:flex-row gap-10 justify-center md:justify-between items-center py-5">
@@ -39,7 +43,7 @@ const Navbar = () => {
                 <FaCartPlus className="text-3xl font-black" />
               </span>
               <div className="w-5 h-5 border border-lime-200 bg-lime-300 rounded-full absolute -top-5 -right-5 text-lime-950 flex justify-center items-center font-semibold text-sm z-10">
-                {totalItems}
+                {totalQuantity}
               </div>
             </div>
           </Link>
@@ -48,4 +52,5 @@ const Navbar = () => {
     </>
   );
 };
+
 export default Navbar;
