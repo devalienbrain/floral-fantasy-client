@@ -7,7 +7,7 @@ import {
 import toast, { Toaster } from "react-hot-toast";
 import { Helmet } from "react-helmet-async";
 
-interface ProductDetailsProps { }
+interface ProductDetailsProps {}
 
 const ProductDetails: FC<ProductDetailsProps> = () => {
   const { id } = useParams<{ id: string }>();
@@ -31,12 +31,16 @@ const ProductDetails: FC<ProductDetailsProps> = () => {
     description,
     rating,
     image,
-    addedToCart,
+    cartQuantity = 0,
   } = product.data;
 
   const productAddedToCart = async () => {
     try {
-      await updateProduct({ id: _id, data: { addedToCart: true } });
+      const newCartQuantity = cartQuantity + 1; // Increase quantity
+      await updateProduct({
+        id: _id,
+        data: { addedToCart: true, cartQuantity: newCartQuantity },
+      });
       toast("Product added to cart successfully!");
     } catch (error) {
       console.error("Failed to update product", error);
@@ -51,7 +55,6 @@ const ProductDetails: FC<ProductDetailsProps> = () => {
       </Helmet>
       <div className="flex justify-center items-center min-h-screen">
         <div className=" max-w-7xl mx-auto p-10 border rounded-lg shadow-md flex flex-col md:flex-row gap-10 justify-center items-center">
-
           <div className="flex-1">
             <img
               src={image}
@@ -74,7 +77,6 @@ const ProductDetails: FC<ProductDetailsProps> = () => {
             <p className="mt-2 text-gray-600">Category: {category}</p>
             <p className="mt-2 text-gray-600">In Stock: {quantity}</p>
             <p className="mt-2 text-yellow-500">Rating: {rating}</p>
-
           </div>
         </div>
       </div>

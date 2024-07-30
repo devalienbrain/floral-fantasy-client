@@ -30,7 +30,7 @@ const PaymentHistory = () => {
         <title>Floral Fantasy | Payment History</title>
       </Helmet>
       <div className="max-w-7xl mx-auto p-10 text-black">
-        <h1 className="text-center py-10 text-6xl font-black text-red-600">
+        <h1 className="text-center py-10 text-6xl font-black text-lime-500">
           Payment History
         </h1>
         <div className="overflow-x-auto">

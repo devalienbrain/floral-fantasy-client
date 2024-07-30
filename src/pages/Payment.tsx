@@ -30,16 +30,13 @@ const Payment = () => {
       <Helmet>
         <title>Floral Fantasy | Payment</title>
       </Helmet>
-      <div className="min-h-screen flex justify-center items-center bg-gradient-to-b from-black/90 via-black/80 to-black/90">
+      <div className="min-h-screen flex justify-center items-center bg-gradient-to-b from-black via-black/98 to-black/99">
         <div className="rounded-xl shadow-xl p-20 bg-white text-black">
           <div className="pb-5">
-            <span className=" text-green-500 text-lg fontbold">
-              {" "}
-              Payment
-            </span>
+            <span className=" text-green-500 text-lg fontbold"> Payment</span>
           </div>
           <div className="pb-5">
-            <Link to='/paymentHistory'>
+            <Link to="/paymentHistory">
               <span className="underline text-red-600 font-semibold">
                 {" "}
                 Payment history

@@ -1,4 +1,4 @@
-import bannerImg from "../../../public/assets/flowerBanner.jpg";
+import bannerImg from "/assets/flowerBanner.jpg";
 
 const Banner = () => {
   const scrollToNextSection = () => {

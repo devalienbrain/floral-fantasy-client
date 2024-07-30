@@ -1,4 +1,4 @@
-import footerBg from "../../../public/assets/footerBg.jpg";
+import footerBg from "/assets/footerBg.jpg";
 const Shine = () => {
   return (
     <>

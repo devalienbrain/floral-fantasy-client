@@ -1,7 +1,5 @@
-
-
 import { FaCartPlus } from "react-icons/fa6";
-import logoIcon from "../../../public/assets/flowerLogo.png";
+import logoIcon from "/assets/flowerLogo.png";
 import { Link } from "react-router-dom";
 import { useGetProductsQuery } from "@/redux/api/api";
 
@@ -10,7 +8,10 @@ const Navbar = () => {
 
   // Calculate total quantity
   const cartProducts = productsData?.data || [];
-  const totalQuantity = cartProducts.reduce((sum, product) => sum + product.cartQuantity, 0);
+  const totalQuantity = cartProducts.reduce(
+    (sum, product) => sum + product.cartQuantity,
+    0
+  );
 
   return (
     <>
