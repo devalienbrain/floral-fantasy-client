@@ -47,14 +47,12 @@ const Pay = ({ data, isOpen, closeModal }) => {
                   >
                     Make sure your Payment!
                   </DialogTitle>
-                  <div className="mt-2">
-                    <p className="text-sm text-gray-500">
-                      After the payment you successfully donate.
-                    </p>
+                  <div className="p-5">
+                    <Elements stripe={stripePromise}>
+                      <PaymentForm data={data} closeModal={closeModal} />
+                    </Elements>
                   </div>
-                  <Elements stripe={stripePromise}>
-                    <PaymentForm data={data} closeModal={closeModal} />
-                  </Elements>
+
                 </DialogPanel>
               </TransitionChild>
             </div>
