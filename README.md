@@ -1,7 +1,7 @@
 #"Fatiha's-Floral-Fantasy"
 #Online Nursery Website 🌱
 
-Live deploy (Netlify) link:
+#Live deploy (Netlify) link: https://floral-fantasy-client.vercel.app/
 
 # React + TypeScript + Vite + Tailwind + ShadcnUI + Redux
 Basic Installion Setup
