@@ -1,9 +1,10 @@
 #"Fatiha's-Floral-Fantasy"
 #Online Nursery Website 🌱
 
-#Live deploy (Netlify) link: https://floral-fantasy-client.vercel.app/
+#Live link (Front end deployed in Vercel): https://floral-fantasy-client.vercel.app/
 
 # React + TypeScript + Vite + Tailwind + ShadcnUI + Redux
+
 Basic Installion Setup
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
@@ -23,12 +24,12 @@ If you are developing a production application, we recommend updating the config
 export default {
   // other rules...
   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
+    ecmaVersion: "latest",
+    sourceType: "module",
+    project: ["./tsconfig.json", "./tsconfig.node.json"],
     tsconfigRootDir: __dirname,
   },
-}
+};
 ```
 
 - Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
@@ -42,8 +43,8 @@ export default {
 3. In the .env file, add the necessary environment variables. For example:
 
    ```sh
-   VITE_PAYMENT_PK = <public key>  
+   VITE_PAYMENT_PK = <public key>
 
    ```
 
-Server side code link:  https://github.com/devalienbrain/floral-fantasy-server
+Server side code link: https://github.com/devalienbrain/floral-fantasy-server

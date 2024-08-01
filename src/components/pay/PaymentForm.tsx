@@ -12,7 +12,7 @@ import { ImSpinner9 } from "react-icons/im";
 interface PaymentFormProps {
   data: {
     name: string;
-    email: string;  // Added email here
+    email: string; 
     amount: number;
   };
   closeModal: () => void;
