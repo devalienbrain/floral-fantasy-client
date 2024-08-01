@@ -1,4 +1,3 @@
-import React from "react";
 import { useGetUsersWhoPaidQuery } from "@/redux/api/api";
 import { Helmet } from "react-helmet-async";
 
@@ -10,7 +9,7 @@ type TPayment = {
 };
 
 const PaymentHistory = () => {
-  const { data, error, isLoading } = useGetUsersWhoPaidQuery();
+  const { data, error, isLoading } = useGetUsersWhoPaidQuery({});
 
   if (isLoading) {
     return <p className="text-green-500">Loading...</p>;

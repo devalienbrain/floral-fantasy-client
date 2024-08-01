@@ -9,7 +9,16 @@ import {
 } from "@/redux/api/api";
 import { ImSpinner9 } from "react-icons/im";
 
-const PaymentForm = ({ data, closeModal }) => {
+interface PaymentFormProps {
+  data: {
+    name: string;
+    email: string;  // Added email here
+    amount: number;
+  };
+  closeModal: () => void;
+}
+
+const PaymentForm: React.FC<PaymentFormProps> = ({ data, closeModal }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [cardError, setCardError] = useState("");
@@ -27,7 +36,9 @@ const PaymentForm = ({ data, closeModal }) => {
   useEffect(() => {
     const fetchClientSecret = async () => {
       try {
-        const response = await createPaymentIntent({ amount: priceInCents }).unwrap();
+        const response = await createPaymentIntent({
+          amount: priceInCents,
+        }).unwrap();
         setClientSecret(response.clientSecret);
       } catch (error) {
         console.error("Error creating payment intent:", error);
@@ -39,7 +50,7 @@ const PaymentForm = ({ data, closeModal }) => {
     }
   }, [priceInCents, createPaymentIntent]);
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!stripe || !elements) {
@@ -56,7 +67,7 @@ const PaymentForm = ({ data, closeModal }) => {
       card,
     });
 
-    if (paymentMethodError) {
+    if (paymentMethodError  instanceof Error) {
       setCardError(paymentMethodError.message);
       return;
     } else {
@@ -77,13 +88,13 @@ const PaymentForm = ({ data, closeModal }) => {
           },
         });
 
-      if (confirmError) {
+      if (confirmError  instanceof Error) {
         setCardError(confirmError.message);
         setProcessing(false);
         return;
       }
 
-      if (paymentIntent.status === "succeeded") {
+      if (paymentIntent?.status === "succeeded") {
         const info = {
           email: data.email,
           name: data.name,
@@ -97,7 +108,7 @@ const PaymentForm = ({ data, closeModal }) => {
           const saveInfoResponse = await savePaymentInfo(info).unwrap();
           if (saveInfoResponse.insertedId) {
             // Clear all cart items
-            await clearCart().unwrap(); // Clear cart without userId
+            await clearCart({}).unwrap();
             setProcessing(false);
             navigate("/");
             toast.success("Your payment was successful and cart cleared!");
@@ -109,7 +120,9 @@ const PaymentForm = ({ data, closeModal }) => {
         }
       }
     } catch (confirmError) {
-      setCardError(confirmError.message);
+      if (confirmError instanceof Error) {
+        setCardError(confirmError.message);
+    }
       setProcessing(false);
     }
   };

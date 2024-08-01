@@ -9,7 +9,7 @@ const Navbar = () => {
   // Calculate total quantity
   const cartProducts = productsData?.data || [];
   const totalQuantity = cartProducts.reduce(
-    (sum, product) => sum + product.cartQuantity,
+    (sum: number, product: { cartQuantity: number }) => sum + product.cartQuantity,
     0
   );
 

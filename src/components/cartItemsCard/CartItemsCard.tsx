@@ -17,9 +17,6 @@ const CartItemsCard: FC<ProductCardProps> = ({
   title,
   price,
   category,
-  quantity,
-  description,
-  rating,
   image,
 }) => {
   return (

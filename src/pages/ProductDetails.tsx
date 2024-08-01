@@ -62,7 +62,10 @@ const ProductDetails: FC<ProductDetailsProps> = () => {
               className="w-full h-full object-contain rounded-lg mb-4 p-5 border"
             />
           </div>
-          <div className="flex-1 flex flex-col justify-center items-center gap-3">
+          <div className="flex-1 flex flex-col justify-start items-start gap-3">
+            <h2 className="text-2xl font-bold text-red-600">{title}</h2>
+            <p className="mt-2 font-black text-xl text-gray-900">${price.toFixed(2)}</p>
+            
             <div className="flex gap-2">
               <button
                 onClick={() => productAddedToCart()}
@@ -71,12 +74,11 @@ const ProductDetails: FC<ProductDetailsProps> = () => {
                 Add to Cart
               </button>
             </div>
-            <h2 className="text-xl font-semibold">{title}</h2>
+            <span className="text-lg font-bold"> Details of the product: </span>
             <p className="text-gray-700">{description}</p>
-            <p className="mt-2 text-gray-900">${price.toFixed(2)}</p>
-            <p className="mt-2 text-gray-600">Category: {category}</p>
-            <p className="mt-2 text-gray-600">In Stock: {quantity}</p>
-            <p className="mt-2 text-yellow-500">Rating: {rating}</p>
+            <p className="mt-2 text-gray-600 text-xl font-bold">Category: {category}</p>
+            <p className="mt-2 text-gray-600 text-xl font-black">In Stock: {quantity}</p>
+            <p className="mt-2 text-yellow-500 font-semibold text-lg">Rating: {rating}</p>
           </div>
         </div>
       </div>

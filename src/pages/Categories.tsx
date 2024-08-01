@@ -40,7 +40,7 @@ const Categories = () => {
     try {
       await addCategory({ name: newCategoryName }).unwrap();
       setNewCategoryName("");
-      document.getElementById("my_modal_5").close();
+      document.getElementById("my_modal_5")?.closest('dialog')?.close();
       toast.success("Category added successfully!");
     } catch (error) {
       console.error("Failed to add category", error);
@@ -50,7 +50,7 @@ const Categories = () => {
 
   const handleEditCategory = (category: CategoryCardProps) => {
     setEditingCategory(category);
-    document.getElementById("edit_modal").showModal();
+    document.getElementById("edit_modal")?.closest('dialog')?.showModal();
   };
 
   const handleUpdateCategory = async () => {
@@ -62,7 +62,7 @@ const Categories = () => {
           data: updateData,
         }).unwrap();
         setEditingCategory(null);
-        document.getElementById("edit_modal").close();
+        document.getElementById("edit_modal")?.closest('dialog')?.close();
         toast.success("Category updated successfully!");
       } catch (error) {
         console.error("Failed to update category", error);
@@ -72,7 +72,7 @@ const Categories = () => {
   };
   const handleConfirmDelete = (id: string) => {
     setCategoryIdToDelete(id);
-    document.getElementById("delete_modal").showModal();
+    document.getElementById("delete_modal")?.closest('dialog')?.showModal();
   };
 
   const handleDeleteCategory = async () => {
@@ -85,7 +85,7 @@ const Categories = () => {
         console.error("Failed to delete category!", error);
         toast.error("Failed to delete category!");
       }
-      document.getElementById("delete_modal").close();
+      document.getElementById("delete_modal")?.closest('dialog')?.close();
     }
   };
 
@@ -103,7 +103,7 @@ const Categories = () => {
           <div className="lg:tooltip" data-tip="Click to add a new category">
             <button
               className="w-20 h-20 rounded-full text-3xl font-black text-lime-600 border"
-              onClick={() => document.getElementById("my_modal_5").showModal()}
+              onClick={() => document.getElementById("my_modal_5")?.closest('dialog')?.showModal()}
             >
               +
             </button>
@@ -133,7 +133,7 @@ const Categories = () => {
               </button>
               <button
                 className="btn"
-                onClick={() => document.getElementById("my_modal_5").close()}
+                onClick={() => document.getElementById("my_modal_5")?.closest('dialog')?.close()}
               >
                 Close
               </button>
@@ -225,7 +225,7 @@ const Categories = () => {
               </button>
               <button
                 className="btn"
-                onClick={() => document.getElementById("edit_modal").close()}
+                onClick={() => document.getElementById("edit_modal")?.closest('dialog')?.close()}
               >
                 Close
               </button>
@@ -251,7 +251,7 @@ const Categories = () => {
               </button>
               <button
                 className="btn btn-primary"
-                onClick={() => document.getElementById("delete_modal").close()}
+                onClick={() => document.getElementById("delete_modal")?.closest('dialog')?.close()}
               >
                 Close
               </button>

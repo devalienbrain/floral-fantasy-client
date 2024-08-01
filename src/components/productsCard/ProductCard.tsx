@@ -1,4 +1,3 @@
-
 import { FC } from "react";
 import { Link } from "react-router-dom";
 import { useUpdateProductMutation } from "@/redux/api/api";
@@ -21,9 +20,7 @@ const ProductCard: FC<ProductCardProps> = ({
   title,
   price,
   category,
-  quantity,
   description,
-  rating,
   image,
   cartQuantity = 0, // Default to 0 if undefined
 }) => {

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { MdOutlineNavigateNext, MdOutlineNavigateBefore } from "react-icons/md";
 import { useGetCategoriesQuery, useGetProductsQuery } from "@/redux/api/api";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import ProductCard from "../productsCard/ProductCard";
 import MosaicViewImages from "../mosaicViewImages/MosaicViewImages";
 
@@ -25,15 +25,12 @@ const ProductContainer = () => {
   const [category, setCategory] = useState("");
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(12);
+  // const [limit, setLimit] = useState(12);
+  const limit = 12;
   const [sortBy, setSortBy] = useState("name");
   const [sortOrder, setSortOrder] = useState("asc");
 
-  const {
-    data: categories,
-    isLoading: isCategoriesLoading,
-    isError: isCategoriesError,
-  } = useGetCategoriesQuery(null);
+  const { data: categories } = useGetCategoriesQuery(null);
 
   const {
     data: productsData,
@@ -41,7 +38,7 @@ const ProductContainer = () => {
     isError: isProductsError,
   } = useGetProductsQuery({ category, search, page, limit, sortBy, sortOrder });
 
-  const handlePageChange = (newPage) => {
+  const handlePageChange = (newPage: number) => {
     setPage(newPage);
   };
 
@@ -49,7 +46,7 @@ const ProductContainer = () => {
     setPage(1);
   };
 
-  const handleSortChange = (sortField) => {
+  const handleSortChange = (sortField: string) => {
     setSortBy(sortField);
     setSortOrder(sortOrder === "asc" ? "desc" : "asc");
   };
@@ -79,11 +76,13 @@ const ProductContainer = () => {
                 className="px-6 py-3 border border-black rounded-md bg-white text-black"
               >
                 <option value="">All Categories</option>
-                {categories?.data?.map((category: CategoryCardProps, index) => (
-                  <option key={index} value={category.name}>
-                    {category.name}
-                  </option>
-                ))}
+                {categories?.data?.map(
+                  (category: CategoryCardProps, index: number) => (
+                    <option key={index} value={category.name}>
+                      {category.name}
+                    </option>
+                  )
+                )}
               </select>
             </div>
             <div className="flex-1 flex md:justify-center items-center gap-0">
@@ -169,15 +168,20 @@ const ProductContainer = () => {
         <hr />
         {/* Category cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-5 pt-24">
-          {categories?.data?.map((category: CategoryCardProps, index) => (
-            <div key={index} className="bg-black/5 shadow-md px-10 rounded-xl">
-              <div className="p-4">
-                <p className="text-red-600 text-xl font-black">
-                  {category.name}
-                </p>
+          {categories?.data?.map(
+            (category: CategoryCardProps, index: number) => (
+              <div
+                key={index}
+                className="bg-black/5 shadow-md px-10 rounded-xl"
+              >
+                <div className="p-4">
+                  <p className="text-red-600 text-xl font-black">
+                    {category.name}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            )
+          )}
         </div>
       </div>
       {/* Category Container and cards part Ends here */}

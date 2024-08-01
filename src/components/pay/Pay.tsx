@@ -12,7 +12,17 @@ import PaymentForm from "./PaymentForm";
 
 const stripePromise = loadStripe(import.meta.env.VITE_PAYMENT_PK);
 
-const Pay = ({ data, isOpen, closeModal }) => {
+interface PayProps {
+  data: {
+    name: string;
+    email: string; 
+    amount: number;
+  };
+  isOpen: boolean;
+  closeModal: () => void;
+}
+
+const Pay: React.FC<PayProps> = ({ data, isOpen, closeModal }) => {
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -49,7 +59,7 @@ const Pay = ({ data, isOpen, closeModal }) => {
                   </DialogTitle>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
-                      After the payment you successfully donate.
+                      After the payment you successfully pay.
                     </p>
                   </div>
                   <Elements stripe={stripePromise}>
@@ -63,6 +73,6 @@ const Pay = ({ data, isOpen, closeModal }) => {
       </Transition>
     </>
   );
-}
+};
 
 export default Pay;

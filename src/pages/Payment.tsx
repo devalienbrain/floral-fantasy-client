@@ -1,8 +1,8 @@
-import Pay from "@/components/pay/Pay";
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { FaQuestionCircle } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
+import Pay from "@/components/pay/Pay";
 
 const Payment = () => {
   const location = useLocation();
@@ -10,20 +10,25 @@ const Payment = () => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");  // Added email state
 
   const closeModal = () => setIsOpen(false);
   const openModal = () => setIsOpen(true);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     openModal();
   };
 
-  const handleChangeName = (e) => {
+  const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
 
-  const data = { name, amount: totalPrice };
+  const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
+
+  const data = { name, email, amount: totalPrice }; // Added email to data
 
   return (
     <>
@@ -33,12 +38,11 @@ const Payment = () => {
       <div className="min-h-screen flex justify-center items-center bg-gradient-to-b from-black via-black/98 to-black/99">
         <div className="rounded-xl shadow-xl p-20 bg-white text-black">
           <div className="pb-5">
-            <span className=" text-green-500 text-lg fontbold"> Payment</span>
+            <span className=" text-green-500 text-lg font-bold">Payment</span>
           </div>
           <div className="pb-5">
             <Link to="/paymentHistory">
               <span className="underline text-red-600 font-semibold">
-                {" "}
                 Payment history
               </span>
             </Link>
@@ -50,10 +54,7 @@ const Payment = () => {
               <FaQuestionCircle title="To pay you will need your card number." />
             </h1>
             {/* FORM STARTS */}
-            <form
-              onSubmit={handleSubmit}
-              className="card-body text-black flex-1"
-            >
+            <form onSubmit={handleSubmit} className="card-body text-black flex-1">
               <div className="form-control">
                 <input
                   required
@@ -62,6 +63,16 @@ const Payment = () => {
                   name="name"
                   placeholder="Your Name"
                   className="input input-bordered w-full"
+                />
+              </div>
+              <div>
+                <input
+                  required
+                  onChange={handleChangeEmail}
+                  type="email"
+                  name="email"
+                  placeholder="Your Email"
+                  className="input mt-2 input-bordered w-full"
                 />
               </div>
               <div>

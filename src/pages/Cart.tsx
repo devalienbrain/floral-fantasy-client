@@ -1,7 +1,6 @@
-
 import { useState } from "react";
 import { useGetProductsQuery, useUpdateProductMutation } from "@/redux/api/api";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { Helmet } from "react-helmet-async";
 
@@ -33,7 +32,7 @@ const Cart = () => {
 
   const handleConfirmRemove = (id: string) => {
     setProductIdToRemove(id);
-    document.getElementById("delete_modal").showModal();
+    document.getElementById("delete_modal")?.closest("dialog")?.showModal();
   };
 
   const handleRemoveFromCart = async () => {
@@ -42,7 +41,11 @@ const Cart = () => {
         const productToRemove = productsData.data.find(
           (product: TProduct) => product._id === productIdToRemove
         );
-        const updatedProduct = { ...productToRemove, addedToCart: false, cartQuantity: 0 };
+        const updatedProduct = {
+          ...productToRemove,
+          addedToCart: false,
+          cartQuantity: 0,
+        };
         await updateProduct({
           id: productIdToRemove,
           data: updatedProduct,
@@ -53,18 +56,19 @@ const Cart = () => {
         console.error("Failed to remove product from cart!", error);
         toast.error("Failed to remove product from cart!");
       }
-      document.getElementById("delete_modal").close();
+      document.getElementById("delete_modal")?.closest("dialog")?.close();
     }
   };
 
   // Calculate total items and total price
   const cartProducts = productsData?.data || [];
   const totalItems = cartProducts.reduce(
-    (sum, product) => sum + product.cartQuantity,
+    (sum: number, product: TProduct) => sum + product.cartQuantity,
     0
   );
   const totalPrice = cartProducts.reduce(
-    (sum, product) => sum + product.price * product.cartQuantity,
+    (sum: number, product: TProduct) =>
+      sum + product.price * product.cartQuantity,
     0
   );
 
@@ -131,7 +135,9 @@ const Cart = () => {
                     </td>
                     <td>${product.price.toFixed(2)}</td>
                     <td>{product.cartQuantity}</td>
-                    <td>${(product.price * product.cartQuantity).toFixed(2)}</td>
+                    <td>
+                      ${(product.price * product.cartQuantity).toFixed(2)}
+                    </td>
                     <td className="flex justify-center">
                       <button
                         onClick={() => handleConfirmRemove(product._id)}

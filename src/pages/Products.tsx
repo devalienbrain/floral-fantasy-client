@@ -23,6 +23,11 @@ type TProduct = {
   image: string;
 };
 
+type TCategory = {
+  _id: string;
+  name: string;
+};
+
 interface CategoryCardProps {
   name: string;
 }
@@ -40,13 +45,15 @@ const Products = () => {
   });
   const [page, setPage] = useState(1);
   const [limit] = useState(10);
-  const [productIdToDelete, setProductIdToDelete] = useState<string | null>(null);
+  const [productIdToDelete, setProductIdToDelete] = useState<string | null>(
+    null
+  );
 
   const {
     data: categoriesData,
     isLoading: isCategoriesLoading,
     isError: isCategoriesError,
-  } = useGetCategoriesQuery();
+  } = useGetCategoriesQuery({});
   const [addProduct, { isLoading: isAddingProduct }] = useAddProductMutation();
   const {
     data: productsData,
@@ -71,7 +78,7 @@ const Products = () => {
         rating: 0,
         image: "",
       });
-      document.getElementById("my_modal_6").close();
+      document.getElementById("my_modal_6")?.closest("dialog")?.close();
       toast.success("Product added successfully!");
     } catch (error) {
       console.error("Failed to add product", error);
@@ -82,12 +89,12 @@ const Products = () => {
   const handleEditProduct = (id: string) => {
     const product = productsData.data.find((p: TProduct) => p._id === id);
     setEditingProduct(product);
-    document.getElementById("edit_modal").showModal();
+    document.getElementById("edit_modal")?.closest("dialog")?.showModal();
   };
 
   const handleConfirmDelete = (id: string) => {
     setProductIdToDelete(id);
-    document.getElementById("delete_modal").showModal();
+    document.getElementById("delete_modal")?.closest("dialog")?.showModal();
   };
 
   const handleDeleteProduct = async () => {
@@ -100,7 +107,7 @@ const Products = () => {
         console.error("Failed to delete product!", error);
         toast.error("Failed to delete product!");
       }
-      document.getElementById("delete_modal").close();
+      document.getElementById("delete_modal")?.closest("dialog")?.close();
     }
   };
 
@@ -110,7 +117,7 @@ const Products = () => {
         const { _id, ...updateData } = editingProduct;
         await updateProduct({ id: _id, data: updateData }).unwrap();
         setEditingProduct(null);
-        document.getElementById("edit_modal").close();
+        document.getElementById("edit_modal")?.closest("dialog")?.close();
         toast.success("Product updated successfully!");
       } catch (error) {
         console.error("Failed to update product", error);
@@ -119,7 +126,7 @@ const Products = () => {
     }
   };
 
-  const handlePageChange = (newPage) => {
+  const handlePageChange = (newPage: number) => {
     setPage(newPage);
   };
 
@@ -138,7 +145,12 @@ const Products = () => {
           <div className="lg:tooltip" data-tip="Click to add a new product">
             <button
               className="w-20 h-20 rounded-full text-3xl font-black text-lime-600 border"
-              onClick={() => document.getElementById("my_modal_6").showModal()}
+              onClick={() =>
+                document
+                  .getElementById("my_modal_6")
+                  ?.closest("dialog")
+                  ?.showModal()
+              }
             >
               +
             </button>
@@ -188,7 +200,7 @@ const Products = () => {
                   ) : isCategoriesError ? (
                     <option>Error loading categories</option>
                   ) : (
-                    categoriesData.data.map((category) => (
+                    categoriesData.data.map((category: TCategory) => (
                       <option key={category._id} value={category.name}>
                         {category.name}
                       </option>
@@ -255,7 +267,12 @@ const Products = () => {
                 </button>
                 <button
                   className="btn"
-                  onClick={() => document.getElementById("my_modal_6").close()}
+                  onClick={() =>
+                    document
+                      .getElementById("my_modal_6")
+                      ?.closest("dialog")
+                      ?.close()
+                  }
                 >
                   Close
                 </button>
@@ -276,7 +293,7 @@ const Products = () => {
             >
               <option value="">All Categories</option>
               {categoriesData?.data?.map(
-                (category: CategoryCardProps, index) => (
+                (category: CategoryCardProps, index: number) => (
                   <option key={index} value={category.name}>
                     {category.name}
                   </option>
@@ -452,7 +469,12 @@ const Products = () => {
             </button>
             <button
               className="btn"
-              onClick={() => document.getElementById("edit_modal").close()}
+              onClick={() =>
+                document
+                  .getElementById("edit_modal")
+                  ?.closest("dialog")
+                  ?.close()
+              }
             >
               Close
             </button>
@@ -476,7 +498,12 @@ const Products = () => {
             </button>
             <button
               className="btn btn-primary"
-              onClick={() => document.getElementById("delete_modal").close()}
+              onClick={() =>
+                document
+                  .getElementById("delete_modal")
+                  ?.closest("dialog")
+                  ?.close()
+              }
             >
               Close
             </button>

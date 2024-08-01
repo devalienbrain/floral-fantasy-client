@@ -1,8 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
+// https://floral-fantasy-server.vercel.app
+// http://localhost:5000
 export const baseApi = createApi({
   reducerPath: "baseApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://floral-fantasy-server.vercel.app",
+    // baseUrl: "http://localhost:5000",
+  }),
   tagTypes: ["Product", "Category", "Payment"],
   endpoints: (builder) => ({
     // Products
@@ -110,7 +114,7 @@ export const baseApi = createApi({
         url: "/clear-cart",
         method: "POST",
       }),
-      invalidatesTags: ["Product"], 
+      invalidatesTags: ["Product"],
     }),
   }),
 });
