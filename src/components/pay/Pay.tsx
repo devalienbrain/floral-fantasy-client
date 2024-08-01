@@ -15,7 +15,7 @@ const stripePromise = loadStripe(import.meta.env.VITE_PAYMENT_PK);
 interface PayProps {
   data: {
     name: string;
-    email: string; 
+    email: string;
     amount: number;
   };
   isOpen: boolean;
@@ -57,14 +57,12 @@ const Pay: React.FC<PayProps> = ({ data, isOpen, closeModal }) => {
                   >
                     Make sure your Payment!
                   </DialogTitle>
-                  <div className="mt-2">
-                    <p className="text-sm text-gray-500">
-                      After the payment you successfully pay.
-                    </p>
+                  <div className="p-5">
+                    <Elements stripe={stripePromise}>
+                      <PaymentForm data={data} closeModal={closeModal} />
+                    </Elements>
                   </div>
-                  <Elements stripe={stripePromise}>
-                    <PaymentForm data={data} closeModal={closeModal} />
-                  </Elements>
+
                 </DialogPanel>
               </TransitionChild>
             </div>
